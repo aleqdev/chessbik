@@ -1,0 +1,21 @@
+[package]
+name = "chessbik"
+version = "0.1.0"
+edition = "2021"
+
+
+[dependencies]
+bevy = "^0.7"
+bevy_mod_picking = "^0.6"
+bevy-inspector-egui = "*"
+bevy_stl = "*"
+bevy-orbit-controls = {path = "./bevy-orbit-controls"}
+lazy_static = "*"
+derive_more = "*"
+
+
+[profile.release]
+opt-level = 3
+
+[profile.release.package."*"]
+opt-level = 3
