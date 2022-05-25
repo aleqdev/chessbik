@@ -71,3 +71,5 @@ impl PiecePosition {
         }
     }
 }
+
+pub trait IntoPiecePosition: Into<super::PiecePosition> {}

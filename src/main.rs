@@ -19,6 +19,7 @@ mod initialization_plugin;
 mod moving_system;
 
 fn main() {
+    println!("{}", std::mem::size_of::<Cell>());
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(bevy_mod_picking::DefaultPickingPlugins)
