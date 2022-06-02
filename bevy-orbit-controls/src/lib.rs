@@ -30,7 +30,7 @@ use bevy::input::mouse::MouseScrollUnit::{Line, Pixel};
 use bevy::input::mouse::MouseWheel;
 use bevy::prelude::*;
 use bevy::render::camera::Camera;
-use std::ops::{RangeInclusive, Sub};
+use std::ops::RangeInclusive;
 
 const LINE_TO_PIXEL_RATIO: f32 = 0.1;
 

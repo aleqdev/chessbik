@@ -1,6 +1,9 @@
 use std::f32::consts::PI;
 
-use crate::*;
+use crate::{
+    app_materials::{AppMaterials, MaterialTy},
+    *,
+};
 
 pub struct DefaultCubeQueryItem {
     pub position: Vec3,
@@ -8,15 +11,15 @@ pub struct DefaultCubeQueryItem {
 }
 pub struct DefaultCubeQuery {
     pub direction: Quat,
-    pub color: Color,
     pub piece_mirrored: bool,
     pub cells: [DefaultCubeQueryItem; 9],
+    pub default_material_getter: fn(&AppMaterials) -> MaterialTy,
+    pub highlighted_material_getter: fn(&AppMaterials) -> MaterialTy,
 }
 
 lazy_static::lazy_static! {
     pub static ref TOP: DefaultCubeQuery = DefaultCubeQuery {
         direction: Quat::from_euler(EulerRot::XYZ, 0., 0., 0.),
-        color: Color::rgb(1., 0.678, 0.678),
         piece_mirrored: false,
         cells: [
             DefaultCubeQueryItem {position: (-1., 1.5, -1.).into(), cell: cell::BPAWN},
@@ -29,11 +32,12 @@ lazy_static::lazy_static! {
             DefaultCubeQueryItem {position: ( 1., 1.5,  0.).into(), cell: cell::WPAWN},
             DefaultCubeQueryItem {position: ( 1., 1.5,  1.).into(), cell: cell::WPAWN},
         ],
+        default_material_getter: |mats| mats.cells.default.top.clone(),
+        highlighted_material_getter: |mats| mats.cells.highlighted.top.clone()
     };
 
     pub static ref LEFT: DefaultCubeQuery = DefaultCubeQuery {
         direction: Quat::from_euler(EulerRot::XYZ, PI / 2., 0., 0.),
-        color: Color::rgb(0.792, 1., 0.749),
         piece_mirrored: false,
         cells: [
             DefaultCubeQueryItem {position: (-1.,  1., 1.5).into(), cell: cell::BPAWN},
@@ -45,12 +49,13 @@ lazy_static::lazy_static! {
             DefaultCubeQueryItem {position: (-1., -1., 1.5).into(), cell: cell::BPAWN},
             DefaultCubeQueryItem {position: ( 0., -1., 1.5).into(), cell: cell::NONE},
             DefaultCubeQueryItem {position: ( 1., -1., 1.5).into(), cell: cell::WPAWN}
-        ]
+        ],
+        default_material_getter: |mats| mats.cells.default.left.clone(),
+        highlighted_material_getter: |mats| mats.cells.highlighted.left.clone()
     };
 
     pub static ref FORWARD: DefaultCubeQuery = DefaultCubeQuery {
         direction: Quat::from_euler(EulerRot::XYZ, 0., 0., -PI / 2.),
-        color: Color::rgb(0.607, 0.964, 1.),
         piece_mirrored: false,
         cells: [
             DefaultCubeQueryItem {position: (1.5,  1., -1.).into(), cell: cell::WKNIGHT},
@@ -62,12 +67,13 @@ lazy_static::lazy_static! {
             DefaultCubeQueryItem {position: (1.5, -1., -1.).into(), cell: cell::WBISHOP},
             DefaultCubeQueryItem {position: (1.5, -1.,  0.).into(), cell: cell::WMAGE},
             DefaultCubeQueryItem {position: (1.5, -1.,  1.).into(), cell: cell::WBISHOP}
-        ]
+        ],
+        default_material_getter: |mats| mats.cells.default.forward.clone(),
+        highlighted_material_getter: |mats| mats.cells.highlighted.forward.clone()
     };
 
     pub static ref RIGHT: DefaultCubeQuery = DefaultCubeQuery {
         direction: Quat::from_euler(EulerRot::XYZ, -PI / 2., 0., 0.),
-        color: Color::rgb(0.8, 0.854, 0.529),
         piece_mirrored: false,
         cells: [
             DefaultCubeQueryItem {position: ( 1.,  1., -1.5).into(), cell: cell::WPAWN},
@@ -79,12 +85,13 @@ lazy_static::lazy_static! {
             DefaultCubeQueryItem {position: ( 1., -1., -1.5).into(), cell: cell::WPAWN},
             DefaultCubeQueryItem {position: ( 0., -1., -1.5).into(), cell: cell::NONE},
             DefaultCubeQueryItem {position: (-1., -1., -1.5).into(), cell: cell::BPAWN}
-        ]
+        ],
+        default_material_getter: |mats| mats.cells.default.right.clone(),
+        highlighted_material_getter: |mats| mats.cells.highlighted.right.clone()
     };
 
     pub static ref BACK: DefaultCubeQuery = DefaultCubeQuery {
         direction: Quat::from_euler(EulerRot::XYZ, 0., 0., PI / 2.),
-        color: Color::rgb(1., 0.839, 0.647),
         piece_mirrored: true,
         cells: [
             DefaultCubeQueryItem {position: (-1.5,  1.,  1.).into(), cell: cell::BKNIGHT},
@@ -96,12 +103,13 @@ lazy_static::lazy_static! {
             DefaultCubeQueryItem {position: (-1.5, -1.,  1.).into(), cell: cell::BBISHOP},
             DefaultCubeQueryItem {position: (-1.5, -1.,  0.).into(), cell: cell::BMAGE},
             DefaultCubeQueryItem {position: (-1.5, -1., -1.).into(), cell: cell::BBISHOP}
-        ]
+        ],
+        default_material_getter: |mats| mats.cells.default.back.clone(),
+        highlighted_material_getter: |mats| mats.cells.highlighted.back.clone()
     };
 
     pub static ref BOTTOM: DefaultCubeQuery = DefaultCubeQuery {
         direction: Quat::from_euler(EulerRot::XYZ, PI, 0., 0.),
-        color: Color::rgb(0.741, 0.698, 1.),
         piece_mirrored: false,
         cells: [
             DefaultCubeQueryItem {position: ( 1., -1.5, -1.).into(), cell: cell::WPAWN},
@@ -113,6 +121,8 @@ lazy_static::lazy_static! {
             DefaultCubeQueryItem {position: (-1., -1.5, -1.).into(), cell: cell::BPAWN},
             DefaultCubeQueryItem {position: (-1., -1.5,  0.).into(), cell: cell::BPAWN},
             DefaultCubeQueryItem {position: (-1., -1.5,  1.).into(), cell: cell::BPAWN}
-        ]
+        ],
+        default_material_getter: |mats| mats.cells.default.bottom.clone(),
+        highlighted_material_getter: |mats| mats.cells.highlighted.bottom.clone()
     };
 }

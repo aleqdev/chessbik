@@ -20,3 +20,15 @@ use crate::Cell;
 pub struct Field {
     pub cells: [Cell; 9 * 6],
 }
+
+impl Field {
+    pub fn at<'a>(&'a self, fref: impl AsRef<PiecePosition>) -> &'a Cell {
+        &self.cells[fref.as_ref().as_index()]
+    }
+}
+
+impl Default for Field {
+    fn default() -> Self {
+        Self::new()
+    }
+}

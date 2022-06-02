@@ -7,22 +7,28 @@ pub mod consts;
 pub mod default_cube;
 pub mod field;
 pub mod field_reference;
+pub mod field_to_cube_transforms;
 pub mod piece;
+
+pub mod app_materials;
 
 pub use cell::*;
 pub use consts::*;
 pub use field::*;
 pub use field_reference::*;
+pub use field_to_cube_transforms::*;
 pub use piece::*;
 
 mod initialization_plugin;
-mod moving_system;
+mod selection_system;
 
 fn main() {
-    println!("{}", std::mem::size_of::<Cell>());
     App::new()
         .add_plugins(DefaultPlugins)
-        .add_plugins(bevy_mod_picking::DefaultPickingPlugins)
+        .add_event::<bevy_mod_picking::PickingEvent>()
+        .init_resource::<bevy_mod_picking::PickingPluginsState>()
+        .add_plugin(bevy_mod_picking::PickingPlugin)
+        .add_plugin(bevy_mod_picking::InteractablePickingPlugin)
         .add_plugin(bevy_inspector_egui::WorldInspectorPlugin::new())
         .add_plugin(bevy_stl::StlPlugin)
         .add_plugin(bevy_orbit_controls::OrbitCameraPlugin)
@@ -32,8 +38,9 @@ fn main() {
             title: "Chessbik".into(),
             ..Default::default()
         })
+        .init_resource::<field::Field>()
         .insert_resource(ClearColor(Color::BLACK))
         .add_startup_system(initialization_plugin::system)
-        .add_system(moving_system::system)
+        .add_system(selection_system::system)
         .run();
 }
