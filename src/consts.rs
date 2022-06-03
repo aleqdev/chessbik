@@ -16,8 +16,10 @@ pub const LIGHT_POSITIONS: [(f32, f32, f32); 6] = [
 
 pub const DEFAULT_CUBE_PLANE_SIZE: f32 = 1.;
 
-pub const MOVE_INDICATOR_OFFSET: f32 = 0.1;
+pub const MOVE_INDICATOR_OFFSET: f32 = 0.01;
 pub const MOVE_INDICATOR_COLOR: Color = Color::rgb(1., 0., 1.);
+
+pub const WS_URL: &'static str = "";
 
 lazy_static::lazy_static! {
     pub static ref DEFAULT_CUBE_QUERIES: [&'static DefaultCubeQuery; 6] = [

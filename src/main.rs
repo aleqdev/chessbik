@@ -1,7 +1,6 @@
 use bevy::prelude::*;
 use bevy_inspector_egui;
 
-pub mod available_moves_indication_system;
 pub mod available_moves_indicator;
 pub mod cell;
 pub mod commons;
@@ -24,6 +23,7 @@ pub use piece::*;
 
 mod initialization_plugin;
 mod selection_system;
+mod available_moves_indication_system;
 
 fn main() {
     App::new()

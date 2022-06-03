@@ -1,10 +1,10 @@
 use bevy::prelude::{shape::Plane, *};
 
-use crate::{Field2CubeTransforms, PiecePosition};
+use crate::{Field2CubeTransforms, PieceMove};
 
 #[derive(Default)]
 pub struct AvailableMovesIndicator {
-    pub moves: Vec<PiecePosition>,
+    pub moves: Vec<PieceMove>,
     pub indicators: Vec<Entity>,
 }
 
@@ -17,11 +17,11 @@ impl AvailableMovesIndicator {
         meshes: &mut ResMut<Assets<Mesh>>,
         materials: &mut ResMut<Assets<StandardMaterial>>,
         transforms: &Res<Field2CubeTransforms>,
-        cube: Entity,
+        cube: Entity
     ) where
         Iter: Iterator,
-        Iter::Item: Into<PiecePosition>,
-        Vec<PiecePosition>: FromIterator<Iter::Item>,
+        Iter::Item: Into<PieceMove>,
+        Vec<PieceMove>: FromIterator<Iter::Item>,
     {
         self.moves = moves.collect();
 
@@ -31,27 +31,21 @@ impl AvailableMovesIndicator {
 
         commands.entity(cube).with_children(|parent| {
             for m in self.moves.iter() {
-                let mut transform = transforms.transform(*m);
+                let mut transform = transforms.transform(m.pos);
                 transform.translation += transform.up() * crate::MOVE_INDICATOR_OFFSET;
 
-                self.indicators.push(
-                    parent
-                        .spawn_bundle(PbrBundle {
-                            mesh: meshes.add(Mesh::from(Plane {
-                                size: crate::DEFAULT_CUBE_PLANE_SIZE,
-                            })),
-                            material: materials.add(StandardMaterial {
-                                base_color: crate::MOVE_INDICATOR_COLOR,
-                                alpha_mode: AlphaMode::Blend,
-                                base_color_texture: Some(asset_server.load("move.png")),
-                                unlit: true,
-                                ..default()
-                            }),
-                            transform,
-                            ..default()
-                        })
-                        .id(),
-                );
+                self.indicators.push(parent.spawn_bundle(PbrBundle {
+                    mesh: meshes.add(Mesh::from(Plane { size: crate::DEFAULT_CUBE_PLANE_SIZE })),
+                    material: materials.add(StandardMaterial {
+                        base_color: crate::MOVE_INDICATOR_COLOR,
+                        alpha_mode: AlphaMode::Blend,
+                        base_color_texture: Some(asset_server.load("move.png")),
+                        unlit: true,
+                        ..default()
+                    }),
+                    transform,
+                    ..default()
+                }).id());
             }
         });
     }

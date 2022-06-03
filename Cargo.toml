@@ -12,6 +12,8 @@ bevy_stl = "*"
 bevy-orbit-controls = { path = "./bevy-orbit-controls" } # upgrade bevy dep to 0.7 [Cargo.toml]
 lazy_static = "*"
 derive_more = "*"
+actix-web = "*"
+actix-cors = "*"
 
 [patch.crates-io]
 bevy = { git = "https://github.com/bevyengine/bevy", branch = "latest", version = "=0.7.0" }

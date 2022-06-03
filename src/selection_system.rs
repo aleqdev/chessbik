@@ -43,7 +43,7 @@ pub fn system(
             continue;
         }
 
-        match field.at(fref).value {
+        match field.at(*fref).value {
             Some(piece) => match hover.hovered() {
                 true => *mat = commons::get_piece_material_hovered(piece.color, &materials),
                 false => *mat = commons::get_piece_material(piece.color, &materials),

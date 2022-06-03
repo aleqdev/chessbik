@@ -13,6 +13,9 @@ pub use piece_position::*;
 pub mod get_available_moves;
 pub use get_available_moves::*;
 
+pub mod piece_move;
+pub use piece_move::*;
+
 pub mod shape_geodesic_field;
 
 use crate::Cell;
@@ -22,12 +25,12 @@ pub struct Field {
 }
 
 impl Field {
-    pub fn at<'a>(&'a self, fref: impl AsRef<PiecePosition>) -> &'a Cell {
-        &self.cells[**fref.as_ref()]
+    pub fn at<'a>(&'a self, fref: impl Into<PiecePosition>) -> &'a Cell {
+        &self.cells[*fref.into()]
     }
 
-    pub fn translate(&mut self, from: impl AsRef<PiecePosition>, to: impl AsRef<PiecePosition>) {
-        self.cells[**to.as_ref()] = self.cells[**from.as_ref()];
+    pub fn translate(&mut self, from: impl Into<PiecePosition>, to: impl Into<PiecePosition>) {
+        self.cells[*to.into()] = self.cells[*from.into()];
     }
 }
 
