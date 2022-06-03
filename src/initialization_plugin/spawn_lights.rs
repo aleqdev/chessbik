@@ -7,9 +7,9 @@ pub fn spawn_lights(commands: &mut Commands) {
             point_light: PointLight {
                 color: crate::LIGHT_COLOR,
                 intensity: crate::LIGHT_INTENSITY,
-                ..Default::default()
+                ..default()
             },
-            ..Default::default()
+            ..default()
         });
     }
 }

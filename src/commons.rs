@@ -44,6 +44,12 @@ pub fn get_piece_stl(ty: crate::PieceTy) -> std::path::PathBuf {
 pub struct PieceMarker;
 
 #[derive(Component)]
+pub struct CubeMarker;
+
+#[derive(Default)]
+pub struct SelectedPieceReference(pub Option<FieldReference>);
+
+#[derive(Component)]
 pub struct CellMaterials {
     pub default: Handle<StandardMaterial>,
     pub highlighted: Handle<StandardMaterial>,
@@ -55,4 +61,7 @@ use bevy::{
 };
 pub(crate) use derive_wrapper;
 
-use crate::app_materials::{AppMaterials, MaterialTy};
+use crate::{
+    app_materials::{AppMaterials, MaterialTy},
+    FieldReference,
+};

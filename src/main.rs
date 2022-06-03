@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 use bevy_inspector_egui;
 
+pub mod available_moves_indication_system;
+pub mod available_moves_indicator;
 pub mod cell;
 pub mod commons;
 pub mod consts;
@@ -12,6 +14,7 @@ pub mod piece;
 
 pub mod app_materials;
 
+pub use available_moves_indicator::*;
 pub use cell::*;
 pub use consts::*;
 pub use field::*;
@@ -42,5 +45,6 @@ fn main() {
         .insert_resource(ClearColor(Color::BLACK))
         .add_startup_system(initialization_plugin::system)
         .add_system(selection_system::system)
+        .add_system(available_moves_indication_system::system)
         .run();
 }

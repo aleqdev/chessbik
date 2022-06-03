@@ -37,18 +37,18 @@ lazy_static::lazy_static! {
     };
 
     pub static ref LEFT: DefaultCubeQuery = DefaultCubeQuery {
-        direction: Quat::from_euler(EulerRot::XYZ, PI / 2., 0., 0.),
+        direction: Quat::from_euler(EulerRot::XYZ, -PI / 2., 0., 0.),
         piece_mirrored: false,
         cells: [
-            DefaultCubeQueryItem {position: (-1.,  1., 1.5).into(), cell: cell::BPAWN},
-            DefaultCubeQueryItem {position: ( 0.,  1., 1.5).into(), cell: cell::NONE},
-            DefaultCubeQueryItem {position: ( 1.,  1., 1.5).into(), cell: cell::WPAWN},
-            DefaultCubeQueryItem {position: (-1.,  0., 1.5).into(), cell: cell::BPAWN},
-            DefaultCubeQueryItem {position: ( 0.,  0., 1.5).into(), cell: cell::NONE},
-            DefaultCubeQueryItem {position: ( 1.,  0., 1.5).into(), cell: cell::WPAWN},
-            DefaultCubeQueryItem {position: (-1., -1., 1.5).into(), cell: cell::BPAWN},
-            DefaultCubeQueryItem {position: ( 0., -1., 1.5).into(), cell: cell::NONE},
-            DefaultCubeQueryItem {position: ( 1., -1., 1.5).into(), cell: cell::WPAWN}
+            DefaultCubeQueryItem {position: (-1.,  1., -1.5).into(), cell: cell::BPAWN},
+            DefaultCubeQueryItem {position: ( 0.,  1., -1.5).into(), cell: cell::NONE},
+            DefaultCubeQueryItem {position: ( 1.,  1., -1.5).into(), cell: cell::WPAWN},
+            DefaultCubeQueryItem {position: (-1.,  0., -1.5).into(), cell: cell::BPAWN},
+            DefaultCubeQueryItem {position: ( 0.,  0., -1.5).into(), cell: cell::NONE},
+            DefaultCubeQueryItem {position: ( 1.,  0., -1.5).into(), cell: cell::WPAWN},
+            DefaultCubeQueryItem {position: (-1., -1., -1.5).into(), cell: cell::BPAWN},
+            DefaultCubeQueryItem {position: ( 0., -1., -1.5).into(), cell: cell::NONE},
+            DefaultCubeQueryItem {position: ( 1., -1., -1.5).into(), cell: cell::WPAWN}
         ],
         default_material_getter: |mats| mats.cells.default.left.clone(),
         highlighted_material_getter: |mats| mats.cells.highlighted.left.clone()
@@ -73,18 +73,18 @@ lazy_static::lazy_static! {
     };
 
     pub static ref RIGHT: DefaultCubeQuery = DefaultCubeQuery {
-        direction: Quat::from_euler(EulerRot::XYZ, -PI / 2., 0., 0.),
+        direction: Quat::from_euler(EulerRot::XYZ, PI / 2., 0., 0.),
         piece_mirrored: false,
         cells: [
-            DefaultCubeQueryItem {position: ( 1.,  1., -1.5).into(), cell: cell::WPAWN},
-            DefaultCubeQueryItem {position: ( 0.,  1., -1.5).into(), cell: cell::NONE},
-            DefaultCubeQueryItem {position: (-1.,  1., -1.5).into(), cell: cell::BPAWN},
-            DefaultCubeQueryItem {position: ( 1.,  0., -1.5).into(), cell: cell::WPAWN},
-            DefaultCubeQueryItem {position: ( 0.,  0., -1.5).into(), cell: cell::NONE},
-            DefaultCubeQueryItem {position: (-1.,  0., -1.5).into(), cell: cell::BPAWN},
-            DefaultCubeQueryItem {position: ( 1., -1., -1.5).into(), cell: cell::WPAWN},
-            DefaultCubeQueryItem {position: ( 0., -1., -1.5).into(), cell: cell::NONE},
-            DefaultCubeQueryItem {position: (-1., -1., -1.5).into(), cell: cell::BPAWN}
+            DefaultCubeQueryItem {position: ( 1.,  1., 1.5).into(), cell: cell::WPAWN},
+            DefaultCubeQueryItem {position: ( 0.,  1., 1.5).into(), cell: cell::NONE},
+            DefaultCubeQueryItem {position: (-1.,  1., 1.5).into(), cell: cell::BPAWN},
+            DefaultCubeQueryItem {position: ( 1.,  0., 1.5).into(), cell: cell::WPAWN},
+            DefaultCubeQueryItem {position: ( 0.,  0., 1.5).into(), cell: cell::NONE},
+            DefaultCubeQueryItem {position: (-1.,  0., 1.5).into(), cell: cell::BPAWN},
+            DefaultCubeQueryItem {position: ( 1., -1., 1.5).into(), cell: cell::WPAWN},
+            DefaultCubeQueryItem {position: ( 0., -1., 1.5).into(), cell: cell::NONE},
+            DefaultCubeQueryItem {position: (-1., -1., 1.5).into(), cell: cell::BPAWN}
         ],
         default_material_getter: |mats| mats.cells.default.right.clone(),
         highlighted_material_getter: |mats| mats.cells.highlighted.right.clone()

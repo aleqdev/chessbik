@@ -1,5 +1,11 @@
+use std::ops::Range;
+
 use bevy::prelude::*;
 
+use crate::{
+    app_materials::AppMaterials, commons::SelectedPieceReference, AvailableMovesIndicator,
+    Field2CubeTransforms,
+};
 pub use crate::{
     default_cube::{DefaultCubeQuery, DefaultCubeQueryItem},
     FieldReference, PiecePosition,
@@ -20,8 +26,9 @@ pub use spawn_lights::spawn_lights;
 pub struct InitializationSystemState<'m0, 'a0> {
     pub meshes: ResMut<'m0, Assets<Mesh>>,
     pub asset_server: Res<'a0, AssetServer>,
-    pub field_refs: std::ops::Range<usize>,
-    pub materials: crate::app_materials::AppMaterials,
+    pub field_refs: Range<usize>,
+    pub materials: AppMaterials,
+    pub transforms: Field2CubeTransforms,
 }
 
 pub fn system(
@@ -38,6 +45,7 @@ pub fn system(
         asset_server: asset_server,
         field_refs: (0..54),
         materials,
+        transforms: default(),
     };
 
     spawn_camera(&mut commands);
@@ -47,4 +55,8 @@ pub fn system(
     spawn_cube(&mut commands, &mut state);
 
     commands.insert_resource(state.materials);
+    commands.insert_resource(state.transforms);
+
+    commands.init_resource::<AvailableMovesIndicator>();
+    commands.init_resource::<SelectedPieceReference>();
 }

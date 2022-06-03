@@ -1,3 +1,4 @@
+/*
 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy)]
 pub enum PieceFace {
     TOP,
@@ -71,5 +72,9 @@ impl PiecePosition {
         }
     }
 }
+*/
 
-pub trait IntoPiecePosition: Into<super::PiecePosition> {}
+crate::commons::derive_wrapper!(
+    #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy)]
+    pub struct PiecePosition(pub usize);
+);

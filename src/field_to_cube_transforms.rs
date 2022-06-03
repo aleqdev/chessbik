@@ -15,10 +15,10 @@ impl Default for Field2CubeTransforms {
 
 impl Field2CubeTransforms {
     pub fn register(&mut self, at: impl Into<PiecePosition>, to: Transform) {
-        self.0[at.into().as_index()] = to;
+        self.0[*at.into()] = to;
     }
 
     pub fn transform(&self, at: impl Into<PiecePosition>) -> Transform {
-        self.0[at.into().as_index()]
+        self.0[*at.into()]
     }
 }

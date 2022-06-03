@@ -23,7 +23,11 @@ pub struct Field {
 
 impl Field {
     pub fn at<'a>(&'a self, fref: impl AsRef<PiecePosition>) -> &'a Cell {
-        &self.cells[fref.as_ref().as_index()]
+        &self.cells[**fref.as_ref()]
+    }
+
+    pub fn translate(&mut self, from: impl AsRef<PiecePosition>, to: impl AsRef<PiecePosition>) {
+        self.cells[**to.as_ref()] = self.cells[**from.as_ref()];
     }
 }
 

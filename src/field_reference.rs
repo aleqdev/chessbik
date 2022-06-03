@@ -7,6 +7,6 @@ crate::commons::derive_wrapper!(
 
 impl Default for FieldReference {
     fn default() -> Self {
-        Self(PiecePosition::array(0usize))
+        Self(PiecePosition(0usize))
     }
 }

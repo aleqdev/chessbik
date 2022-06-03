@@ -12,7 +12,7 @@ pub fn spawn_camera(commands: &mut Commands) {
             pan_button: MouseButton::Middle,
             rotate_sensitivity: 0.8,
             pan_sensitivity: 0.,
-            ..Default::default()
+            ..default()
         })
         .with_children(|parent| {
             parent.spawn_bundle(PointLightBundle {
@@ -20,9 +20,9 @@ pub fn spawn_camera(commands: &mut Commands) {
                 point_light: PointLight {
                     color: crate::LIGHT_COLOR,
                     intensity: crate::LIGHT_INTENSITY * 2.,
-                    ..Default::default()
+                    ..default()
                 },
-                ..Default::default()
+                ..default()
             });
         });
 }

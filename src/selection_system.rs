@@ -1,7 +1,11 @@
 use bevy::prelude::*;
 use bevy_mod_picking::{Hover, Selection};
 
-use crate::{app_materials::AppMaterials, commons::CellMaterials, Field, FieldReference};
+use crate::{
+    app_materials::AppMaterials,
+    commons::{self, CellMaterials, SelectedPieceReference},
+    Field, FieldReference,
+};
 
 pub fn system(
     mut query_pieces: Query<
@@ -30,17 +34,19 @@ pub fn system(
     >,
     field: Res<Field>,
     materials: Res<AppMaterials>,
+    mut selected_reference: ResMut<SelectedPieceReference>,
 ) {
     for (mut mat, fref, hover, selection) in query_pieces.iter_mut() {
         if selection.selected() {
             *mat = materials.selected.clone();
+            selected_reference.0 = Some(*fref);
             continue;
         }
 
         match field.at(fref).value {
             Some(piece) => match hover.hovered() {
-                true => *mat = crate::commons::get_piece_material_hovered(piece.color, &materials),
-                false => *mat = crate::commons::get_piece_material(piece.color, &materials),
+                true => *mat = commons::get_piece_material_hovered(piece.color, &materials),
+                false => *mat = commons::get_piece_material(piece.color, &materials),
             },
             None => {}
         }
