@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use chessbik_board::{PiecePosition, Piece};
+use chessbik_board::{Piece, PiecePosition};
 use std::f32::consts::PI;
 
 use crate::{commons, BoardReference};

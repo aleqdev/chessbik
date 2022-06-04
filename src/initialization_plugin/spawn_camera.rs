@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use smooth_bevy_cameras::{controllers::orbit::{OrbitCameraBundle, OrbitCameraController}};
+use smooth_bevy_cameras::controllers::orbit::{OrbitCameraBundle, OrbitCameraController};
 
 pub fn spawn_camera(commands: &mut Commands) {
     commands

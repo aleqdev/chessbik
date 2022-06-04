@@ -8,7 +8,7 @@ use crate::{
 };
 pub use crate::{
     default_cube::{DefaultCubeQuery, DefaultCubeQueryItem},
-    BoardReference
+    BoardReference,
 };
 
 mod spawn_camera;

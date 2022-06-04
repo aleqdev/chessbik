@@ -5,8 +5,8 @@ edition = "2021"
 
 
 [dependencies]
-bevy = "*"
-bevy_mod_picking = { path = "./bevy_mod_picking" } # remove keyboard interaction [src/selection.rs]
+bevy = "0.7"
+bevy_mod_picking = { git = "https://github.com/aevyrie/bevy_mod_picking", branch = "release" }
 bevy-inspector-egui = "*"
 bevy_stl = "*"
 smooth-bevy-cameras = { git = "https://github.com/bonsairobo/smooth-bevy-cameras" }
@@ -15,9 +15,6 @@ derive_more = "*"
 
 chessbik-commons = { git = "https://github.com/necromfox/chessbik-commons" }
 chessbik-board = { git = "https://github.com/necromfox/chessbik-board"}
-
-[patch.crates-io]
-bevy = { git = "https://github.com/bevyengine/bevy", branch = "latest", version = "=0.7.0" }
 
 [profile.release]
 opt-level = 3

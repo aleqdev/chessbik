@@ -1,23 +1,24 @@
 use bevy::prelude::*;
 use bevy_inspector_egui;
 
+pub mod app_materials;
 pub mod available_moves_indicator;
-pub mod commons;
-pub mod consts;
-pub mod default_cube;
 pub mod board_reference;
 pub mod board_to_cube_transforms;
-pub mod app_materials;
+pub mod commons;
+pub mod consts;
+pub mod custom_picking_plugin;
+pub mod default_cube;
 
 pub use available_moves_indicator::*;
-pub use consts::*;
 pub use board_reference::*;
 pub use board_to_cube_transforms::*;
+pub use consts::*;
 
-mod initialization_plugin;
-mod selection_system;
 mod available_moves_indication_system;
 mod camera_control_system;
+mod initialization_plugin;
+mod selection_system;
 
 fn main() {
     App::new()
@@ -25,7 +26,7 @@ fn main() {
         .add_event::<bevy_mod_picking::PickingEvent>()
         .init_resource::<bevy_mod_picking::PickingPluginsState>()
         .add_plugin(bevy_mod_picking::PickingPlugin)
-        .add_plugin(bevy_mod_picking::InteractablePickingPlugin)
+        .add_plugin(custom_picking_plugin::CustomPickingPlugin)
         .add_plugin(bevy_inspector_egui::WorldInspectorPlugin::new())
         .add_plugin(bevy_stl::StlPlugin)
         .add_plugin(smooth_bevy_cameras::LookTransformPlugin)

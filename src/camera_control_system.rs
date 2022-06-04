@@ -1,4 +1,7 @@
-use bevy::{prelude::*, input::mouse::{MouseWheel, MouseMotion, MouseScrollUnit}};
+use bevy::{
+    input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel},
+    prelude::*,
+};
 use smooth_bevy_cameras::controllers::orbit::{ControlEvent, OrbitCameraController};
 
 pub fn system(
@@ -9,9 +12,7 @@ pub fn system(
     controllers: Query<&OrbitCameraController>,
 ) {
     // Can only control one camera at a time.
-    let controller = if let Some(controller) = controllers.iter().find(|c| {
-        c.enabled
-    }) {
+    let controller = if let Some(controller) = controllers.iter().find(|c| c.enabled) {
         controller
     } else {
         return;

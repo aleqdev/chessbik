@@ -5,10 +5,7 @@ pub fn get_piece_material(color: PieceColor, materials: &AppMaterials) -> Materi
     }
 }
 
-pub fn get_piece_material_hovered(
-    color: PieceColor,
-    materials: &AppMaterials,
-) -> MaterialTy {
+pub fn get_piece_material_hovered(color: PieceColor, materials: &AppMaterials) -> MaterialTy {
     match color {
         PieceColor::WHITE => materials.pieces.highlighted_white.clone(),
         PieceColor::BLACK => materials.pieces.highlighted_black.clone(),

@@ -1,31 +1,50 @@
-use crate::PausedForBlockers;
-use bevy::prelude::*;
+use bevy::{ecs::schedule::ShouldRun, prelude::*};
+use bevy_mod_picking::{
+    mesh_events_system, mesh_focus, pause_for_picking_blockers, PausedForBlockers,
+    PickingEvent, PickingPluginsState, PickingSystem, NoDeselect, Selection,
+};
 
-/// Tracks the current selection state to be used with change tracking in the events system. Meshes
-/// with [Selection] will have selection state managed.
-///
-/// # Requirements
-///
-/// An entity with the [Selection] component must also have an [Interaction] component.
-#[derive(Component, Debug, Default, Copy, Clone)]
-pub struct Selection {
-    selected: bool,
-}
-impl Selection {
-    pub fn selected(&self) -> bool {
-        self.selected
+pub struct CustomPickingPlugin;
+
+impl Plugin for CustomPickingPlugin {
+    fn build(&self, app: &mut App) {
+        app.init_resource::<PausedForBlockers>()
+            .add_event::<PickingEvent>()
+            .add_system_set_to_stage(
+                CoreStage::PreUpdate,
+                SystemSet::new()
+                    .with_run_criteria(|state: Res<PickingPluginsState>| {
+                        simple_criteria(state.enable_interacting)
+                    })
+                    .with_system(
+                        pause_for_picking_blockers
+                            .label(PickingSystem::PauseForBlockers)
+                            .after(PickingSystem::UpdateRaycast),
+                    )
+                    .with_system(
+                        mesh_focus
+                            .label(PickingSystem::Focus)
+                            .after(PickingSystem::PauseForBlockers),
+                    )
+                    .with_system(
+                        mesh_selection
+                            .label(PickingSystem::Selection)
+                            .before(PickingSystem::Events)
+                            .after(PickingSystem::Focus),
+                    )
+                    .with_system(mesh_events_system.label(PickingSystem::Events)),
+            );
     }
-    /// Set the selection state.
-    pub fn set_selected(&mut self, selected: bool) {
-        self.selected = selected;
+}
+
+fn simple_criteria(flag: bool) -> ShouldRun {
+    if flag {
+        ShouldRun::Yes
+    } else {
+        ShouldRun::No
     }
 }
 
-/// Marker struct used to mark pickable entities for which you don't want to trigger a deselection event when picked. This is useful for gizmos or other pickable UI entities.
-#[derive(Component, Debug, Copy, Clone)]
-pub struct NoDeselect;
-
-#[allow(clippy::too_many_arguments)]
 pub fn mesh_selection(
     paused: Option<Res<PausedForBlockers>>,
     mouse_button_input: Res<Input<MouseButton>>,
@@ -36,7 +55,7 @@ pub fn mesh_selection(
     no_deselect_query: Query<&Interaction, With<NoDeselect>>,
 ) {
     if let Some(paused) = paused {
-        if paused.0 {
+        if paused.is_paused() {
             return;
         }
     }
@@ -59,19 +78,20 @@ pub fn mesh_selection(
     } else*/ if new_selection {
         // Some pickable mesh has been clicked on - figure out what to select or deselect
         for (mut selection, interaction) in &mut query_all.iter_mut() {
-            if selection.selected
+            if selection.selected()
                 && *interaction != Interaction::Clicked
                 /*&& !keyboard_input.pressed(KeyCode::LControl)*/
             {
                 // In this case, the entity is currently marked as selected, but it was not clicked
                 // on (interaction), and lctrl was not being held, so it should be deselected.
-                selection.selected = false;
+                selection.set_selected(false);
             } else if *interaction == Interaction::Clicked
                 /*&& keyboard_input.pressed(KeyCode::LControl)*/
             {
-                selection.selected = !selection.selected
-            } else if !selection.selected && *interaction == Interaction::Clicked {
-                selection.selected = true;
+                let uns = !selection.selected();
+                selection.set_selected(uns)
+            } else if !selection.selected() && *interaction == Interaction::Clicked {
+                selection.set_selected(true)
             }
         }
     } else {
@@ -94,8 +114,8 @@ pub fn mesh_selection(
             || touches_input.iter_just_pressed().next().is_some();
         if mouse_clicked && ui_not_clicked && no_deselect_not_clicked {
             for (mut selection, _interaction) in &mut query_all.iter_mut() {
-                if selection.selected {
-                    selection.selected = false;
+                if selection.selected() {
+                    selection.set_selected(false)
                 }
             }
         }
