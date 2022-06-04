@@ -1,17 +1,18 @@
 use bevy::prelude::*;
 use bevy_mod_picking::{Hover, Selection};
+use chessbik_board::Board;
 
 use crate::{
     app_materials::AppMaterials,
     commons::{self, CellMaterials, SelectedPieceReference},
-    Field, FieldReference,
+    BoardReference,
 };
 
 pub fn system(
     mut query_pieces: Query<
         (
             &mut Handle<StandardMaterial>,
-            &FieldReference,
+            &BoardReference,
             &Hover,
             &Selection,
         ),
@@ -32,7 +33,7 @@ pub fn system(
             Without<crate::commons::PieceMarker>,
         ),
     >,
-    field: Res<Field>,
+    board: Res<Board>,
     materials: Res<AppMaterials>,
     mut selected_reference: ResMut<SelectedPieceReference>,
 ) {
@@ -43,7 +44,7 @@ pub fn system(
             continue;
         }
 
-        match field.at(*fref).value {
+        match board.at(*fref).value {
             Some(piece) => match hover.hovered() {
                 true => *mat = commons::get_piece_material_hovered(piece.color, &materials),
                 false => *mat = commons::get_piece_material(piece.color, &materials),

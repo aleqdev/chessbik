@@ -1,7 +1,8 @@
 use bevy::prelude::*;
+use chessbik_board::{PiecePosition, Piece};
 use std::f32::consts::PI;
 
-use crate::{commons, FieldReference, Piece, PiecePosition};
+use crate::{commons, BoardReference};
 
 use super::{DefaultCubeQuery, InitializationSystemState};
 
@@ -15,7 +16,7 @@ pub fn spawn_cube_side_cells(
             size: crate::DEFAULT_CUBE_PLANE_SIZE,
         }));
         let transform = Transform::from_translation(*position).with_rotation(query.direction);
-        let reference = FieldReference::from(PiecePosition(state.field_refs.next().unwrap()));
+        let reference = BoardReference::from(PiecePosition(state.field_refs.next().unwrap()));
 
         state.transforms.register(reference, transform);
 

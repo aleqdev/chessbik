@@ -1,19 +1,20 @@
 use bevy::prelude::*;
+use smooth_bevy_cameras::{controllers::orbit::{OrbitCameraBundle, OrbitCameraController}};
 
 pub fn spawn_camera(commands: &mut Commands) {
     commands
         .spawn_bundle(PerspectiveCameraBundle::new_3d())
-        .insert(
-            Transform::from_translation(*crate::CAMERA_POSITION).looking_at(Vec3::ZERO, Vec3::Y),
-        )
         .insert_bundle(bevy_mod_picking::PickingCameraBundle::default())
-        .insert(bevy_orbit_controls::OrbitCamera {
-            rotate_button: MouseButton::Right,
-            pan_button: MouseButton::Middle,
-            rotate_sensitivity: 0.8,
-            pan_sensitivity: 0.,
-            ..default()
-        })
+        .insert_bundle(OrbitCameraBundle::new(
+            OrbitCameraController {
+                mouse_rotate_sensitivity: Vec2::splat(0.01),
+                mouse_wheel_zoom_sensitivity: 0.1,
+                smoothing_weight: 0.5,
+                ..default()
+            },
+            *crate::CAMERA_POSITION,
+            Vec3::ZERO,
+        ))
         .with_children(|parent| {
             parent.spawn_bundle(PointLightBundle {
                 transform: Transform::from_translation(Vec3::new(0., 1., 0.)),

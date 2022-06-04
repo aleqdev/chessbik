@@ -1,19 +1,19 @@
 use bevy::prelude::*;
 
-use crate::PiecePosition;
+use chessbik_board::PiecePosition;
 
-crate::commons::derive_wrapper!(
+chessbik_commons::derive_wrapper!(
     #[derive(Clone, Copy)]
-    pub struct Field2CubeTransforms([Transform; 54]);
+    pub struct Board2CubeTransforms([Transform; 54]);
 );
 
-impl Default for Field2CubeTransforms {
+impl Default for Board2CubeTransforms {
     fn default() -> Self {
         Self([Default::default(); 54])
     }
 }
 
-impl Field2CubeTransforms {
+impl Board2CubeTransforms {
     pub fn register(&mut self, at: impl Into<PiecePosition>, to: Transform) {
         self.0[*at.into()] = to;
     }

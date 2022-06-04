@@ -4,11 +4,11 @@ use bevy::prelude::*;
 
 use crate::{
     app_materials::AppMaterials, commons::SelectedPieceReference, AvailableMovesIndicator,
-    Field2CubeTransforms,
+    Board2CubeTransforms,
 };
 pub use crate::{
     default_cube::{DefaultCubeQuery, DefaultCubeQueryItem},
-    FieldReference, PiecePosition,
+    BoardReference
 };
 
 mod spawn_camera;
@@ -28,7 +28,7 @@ pub struct InitializationSystemState<'m0, 'a0> {
     pub asset_server: Res<'a0, AssetServer>,
     pub field_refs: Range<usize>,
     pub materials: AppMaterials,
-    pub transforms: Field2CubeTransforms,
+    pub transforms: Board2CubeTransforms,
 }
 
 pub fn system(
