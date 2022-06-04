@@ -1,7 +1,4 @@
-use bevy::{
-    input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel},
-    prelude::*,
-};
+use bevy::{prelude::*, input::mouse::{MouseWheel, MouseMotion, MouseScrollUnit}};
 use smooth_bevy_cameras::controllers::orbit::{ControlEvent, OrbitCameraController};
 
 pub fn system(

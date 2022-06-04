@@ -11,13 +11,11 @@ pub use crate::{
     BoardReference,
 };
 
-mod spawn_camera;
 mod spawn_cube;
 mod spawn_cube_side;
 mod spawn_cube_side_cells;
 mod spawn_lights;
 
-pub use spawn_camera::spawn_camera;
 pub use spawn_cube::spawn_cube;
 pub use spawn_cube_side::spawn_cube_side;
 pub use spawn_cube_side_cells::spawn_cube_side_cells;
@@ -47,8 +45,6 @@ pub fn system(
         materials,
         transforms: default(),
     };
-
-    spawn_camera(&mut commands);
 
     spawn_lights(&mut commands);
 
