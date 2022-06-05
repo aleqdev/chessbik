@@ -16,11 +16,11 @@ derive_more = "*"
 chessbik-commons = { git = "https://github.com/necromfox/chessbik-commons" }
 chessbik-board = { git = "https://github.com/necromfox/chessbik-board"}
 
-[target."cfg(wasm)".dependencies]
+[target."cfg(target_arch = \"wasm32\")".dependencies]
 web-sys = { version = "*", features = ["Window", "Clipboard", "Navigator"] }
 wasm-bindgen = "*"
 
-[target."cfg(not(wasm))".dependencies]
+[target."cfg(not(target_arch = \"wasm32\"))".dependencies]
 clipboard = "^0.5.0"
 
 [profile.release]
