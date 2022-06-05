@@ -1,7 +1,7 @@
 use bevy::{ecs::schedule::ShouldRun, prelude::*};
 use bevy_mod_picking::{
-    mesh_events_system, mesh_focus, pause_for_picking_blockers, PausedForBlockers,
-    PickingEvent, PickingPluginsState, PickingSystem
+    mesh_events_system, mesh_focus, pause_for_picking_blockers, PausedForBlockers, PickingEvent,
+    PickingPluginsState, PickingSystem,
 };
 
 mod mesh_selection;

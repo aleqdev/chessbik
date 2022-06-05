@@ -3,18 +3,25 @@ name = "chessbik"
 version = "0.1.0"
 edition = "2021"
 
-
 [dependencies]
-bevy = "0.7"
+bevy = "=0.7"
 bevy_mod_picking = { git = "https://github.com/aevyrie/bevy_mod_picking", branch = "release" }
 bevy-inspector-egui = "*"
 bevy_stl = "*"
+bevy_egui = "^0.14.0"
 smooth-bevy-cameras = { git = "https://github.com/bonsairobo/smooth-bevy-cameras" }
 lazy_static = "*"
 derive_more = "*"
 
 chessbik-commons = { git = "https://github.com/necromfox/chessbik-commons" }
 chessbik-board = { git = "https://github.com/necromfox/chessbik-board"}
+
+[target."cfg(wasm)".dependencies]
+web-sys = { version = "*", features = ["Window", "Clipboard", "Navigator"] }
+wasm-bindgen = "*"
+
+[target."cfg(not(wasm))".dependencies]
+clipboard = "^0.5.0"
 
 [profile.release]
 opt-level = 3

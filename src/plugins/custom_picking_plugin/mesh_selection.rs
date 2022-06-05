@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use bevy_mod_picking::{PausedForBlockers, Selection, NoDeselect};
+use bevy_mod_picking::{NoDeselect, PausedForBlockers, Selection};
 
 pub fn mesh_selection(
     paused: Option<Res<PausedForBlockers>>,
@@ -31,18 +31,18 @@ pub fn mesh_selection(
                 selection.selected = true;
             }
         });
-    } else*/ if new_selection {
+    } else*/
+    if new_selection {
         // Some pickable mesh has been clicked on - figure out what to select or deselect
         for (mut selection, interaction) in &mut query_all.iter_mut() {
-            if selection.selected()
-                && *interaction != Interaction::Clicked
-                /*&& !keyboard_input.pressed(KeyCode::LControl)*/
+            if selection.selected() && *interaction != Interaction::Clicked
+            /*&& !keyboard_input.pressed(KeyCode::LControl)*/
             {
                 // In this case, the entity is currently marked as selected, but it was not clicked
                 // on (interaction), and lctrl was not being held, so it should be deselected.
                 selection.set_selected(false);
             } else if *interaction == Interaction::Clicked
-                /*&& keyboard_input.pressed(KeyCode::LControl)*/
+            /*&& keyboard_input.pressed(KeyCode::LControl)*/
             {
                 let uns = !selection.selected();
                 selection.set_selected(uns)
@@ -56,13 +56,17 @@ pub fn mesh_selection(
         let mut ui_not_clicked = true;
         for interaction in node_query.iter() {
             // Check if anything in the UI is being interacted with
-            if *interaction == Interaction::Clicked /*&& !keyboard_input.pressed(KeyCode::LControl)*/ {
+            if *interaction == Interaction::Clicked
+            /*&& !keyboard_input.pressed(KeyCode::LControl)*/
+            {
                 ui_not_clicked = false;
             }
         }
         let mut no_deselect_not_clicked = true;
         for interaction in no_deselect_query.iter() {
-            if *interaction == Interaction::Clicked /*&& !keyboard_input.pressed(KeyCode::LControl)*/ {
+            if *interaction == Interaction::Clicked
+            /*&& !keyboard_input.pressed(KeyCode::LControl)*/
+            {
                 no_deselect_not_clicked = false;
             }
         }

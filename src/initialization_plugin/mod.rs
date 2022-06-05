@@ -50,7 +50,6 @@ pub fn system(
 
     spawn_cube(&mut commands, &mut state);
 
-    commands.insert_resource(state.materials);
     commands.insert_resource(state.transforms);
 
     commands.init_resource::<AvailableMovesIndicator>();

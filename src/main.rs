@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy_inspector_egui::{self, WorldInspectorPlugin};
 
 pub mod app_materials;
 pub mod available_moves_indicator;
@@ -8,13 +7,13 @@ pub mod board_to_cube_transforms;
 pub mod commons;
 pub mod consts;
 pub mod default_cube;
+pub mod events;
 
 pub use available_moves_indicator::*;
 use bevy_stl::StlPlugin;
 pub use board_reference::*;
 pub use board_to_cube_transforms::*;
 pub use consts::*;
-use smooth_bevy_cameras::{LookTransformPlugin, controllers::orbit::OrbitCameraPlugin};
 
 mod available_moves_indication_system;
 mod initialization_plugin;
@@ -26,10 +25,7 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(plugins::Plugins)
-        .add_plugin(WorldInspectorPlugin::new())
         .add_plugin(StlPlugin)
-        .add_plugin(LookTransformPlugin)
-        .add_plugin(OrbitCameraPlugin::new(true))
         .insert_resource(WindowDescriptor {
             width: 800.,
             height: 1024.,
