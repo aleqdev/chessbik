@@ -1,22 +1,17 @@
 use bevy::prelude::*;
 
-
-#[cfg(target_arch = "wasm32")]
-mod implementation {
-    mod wasm;
-    pub use wasm::system;
-}
-
-#[cfg(not(target_arch = "wasm32"))]
-mod implementation {
-    mod regular;
-    pub use regular::system;
-}
-
 pub struct CopyLobbyPlugin;
 
 impl Plugin for CopyLobbyPlugin {
+    #[cfg(target_arch = "wasm32")]
     fn build(&self, app: &mut App) {
-        app.add_system(implementation::system);
+        #[path = "wasm.rs"] mod wasm;
+        app.add_system(wasm::system);
+    }
+
+    #[cfg(not(target_arch = "wasm32"))]
+    fn build(&self, app: &mut App) {
+        #[path = "regular.rs"] mod regular;
+        app.add_system(regular::system);
     }
 }

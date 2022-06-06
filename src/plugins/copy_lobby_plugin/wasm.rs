@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-//use web_sys;
 
 use crate::events::UiLobbyCopyEvent;
 
