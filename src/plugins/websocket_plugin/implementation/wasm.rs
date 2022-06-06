@@ -9,7 +9,6 @@ pub fn system(
     use js_sys::Array;
     use wasm_bindgen::{JsCast, prelude::*};
     use wasm_rs_shared_channel::spsc;
-    use std::time::Duration;
 
     let (recv_tx, recv_rx) = spsc::channel::<String>(128).split();
     let (send_tx, send_rx) = spsc::channel::<String>(128).split();
@@ -30,7 +29,7 @@ pub fn system(
     let cloned_ws = ws.clone();
     let h = move || {
         loop {
-            while let Some(str) = send_rx.recv(Some(Duration::from_secs_f32(0.06))).expect("failed to read send_rx") {
+            while let Some(str) = send_rx.recv(None).expect("failed to read from send_rx") {
                 cloned_ws.send_with_str(&str)
                     .expect("failed to send websocket message");
             }
