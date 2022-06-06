@@ -22,7 +22,7 @@ pub struct WebsocketPlugin;
 
 impl Plugin for WebsocketPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(implementation::system);
+        app.add_startup_system(implementation::system.exclusive_system());
         app.add_event::<WebsocketEvent>();
     }
 }

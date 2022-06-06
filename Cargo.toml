@@ -12,7 +12,6 @@ bevy_egui = "^0.14.0"
 smooth-bevy-cameras = { git = "https://github.com/bonsairobo/smooth-bevy-cameras" }
 lazy_static = "*"
 derive_more = "*"
-crossbeam-channel = "*"
 
 chessbik-commons = { git = "https://github.com/necromfox/chessbik-commons" }
 chessbik-board = { git = "https://github.com/necromfox/chessbik-board"}
@@ -30,6 +29,7 @@ web-sys = { version = "*", features = [
 ] }
 wasm-bindgen = "*"
 js-sys = "*"
+wasm-rs-shared-channel = "*"
 
 [target."cfg(not(target_arch = \"wasm32\"))".dependencies]
 clipboard = "^0.5.0"
