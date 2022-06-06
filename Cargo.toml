@@ -12,6 +12,7 @@ bevy_egui = "^0.14.0"
 smooth-bevy-cameras = { git = "https://github.com/bonsairobo/smooth-bevy-cameras" }
 lazy_static = "*"
 derive_more = "*"
+crossbeam-channel = "*"
 
 chessbik-commons = { git = "https://github.com/necromfox/chessbik-commons" }
 chessbik-board = { git = "https://github.com/necromfox/chessbik-board"}
@@ -36,7 +37,6 @@ async-tungstenite = { version = "*", features = ["async-std-runtime"]}
 futures-util = "*"
 async-std = "*"
 futures = "*"
-crossbeam-channel = "*"
 
 [profile.release]
 opt-level = 3
