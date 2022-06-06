@@ -1,31 +1,17 @@
-pub mod resources;
+pub mod connect;
 pub mod convertion;
+pub mod resources;
 mod simple;
 
+use bevy::{core::FixedTimestep, prelude::*};
 
-#[cfg(target_arch = "wasm32")]
-mod implementation {
-    use super::*;
-    mod wasm;
-    pub use wasm::system;
-}
-
-#[cfg(not(target_arch = "wasm32"))]
-mod implementation {
-    use super::*;
-    mod regular;
-    pub use regular::system;
-}
-
-use bevy::{prelude::*, core::FixedTimestep};
-
-use crate::events::{WebsocketSendEvent, WebsocketReceiveEvent};
+use crate::events::{WebsocketReceiveEvent, WebsocketSendEvent};
 
 pub struct WebsocketPlugin;
 
 impl Plugin for WebsocketPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(implementation::system.exclusive_system());
+        app.add_startup_system(connect::connect_system.exclusive_system());
         app.add_system(convertion::send_system);
         app.add_system(convertion::receive_system);
         app.add_event::<WebsocketSendEvent>();
@@ -34,7 +20,7 @@ impl Plugin for WebsocketPlugin {
             SystemSet::new()
                 .with_run_criteria(FixedTimestep::steps_per_second(1.))
                 .with_system(simple::read_system)
-                .with_system(simple::write_system)
+                .with_system(simple::write_system),
         );
     }
 }

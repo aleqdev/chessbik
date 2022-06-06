@@ -1,11 +1,11 @@
 use bevy::{app::PluginGroupBuilder, prelude::*};
 
 mod camera_plugin;
+mod copy_lobby_plugin;
 mod custom_picking_plugin;
+mod disable_ctx_menu_plugin;
 mod menu_plugin;
 mod resources_plugin;
-mod copy_lobby_plugin;
-mod disable_ctx_menu_plugin;
 mod websocket_plugin;
 
 pub struct Plugins;

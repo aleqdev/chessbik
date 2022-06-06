@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use smooth_bevy_cameras::{LookTransformPlugin, controllers::orbit::OrbitCameraPlugin};
+use smooth_bevy_cameras::{controllers::orbit::OrbitCameraPlugin, LookTransformPlugin};
 
 mod override_input_system;
 mod spawn_system;

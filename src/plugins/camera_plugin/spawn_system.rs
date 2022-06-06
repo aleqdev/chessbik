@@ -1,9 +1,7 @@
 use bevy::prelude::*;
 use smooth_bevy_cameras::controllers::orbit::{OrbitCameraBundle, OrbitCameraController};
 
-pub fn system(
-    mut commands: Commands
-) {
+pub fn system(mut commands: Commands) {
     commands
         .spawn_bundle(PerspectiveCameraBundle::new_3d())
         .insert_bundle(bevy_mod_picking::PickingCameraBundle::default())

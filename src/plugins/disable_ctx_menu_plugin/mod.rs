@@ -6,7 +6,7 @@ impl Plugin for DisableCtxMenuPlugin {
     #[cfg(target_arch = "wasm32")]
     fn build(&self, app: &mut App) {
         use wasm_bindgen::prelude::wasm_bindgen;
-        
+
         #[wasm_bindgen(module = "/js/disable_ctx_menu.js")]
         extern "C" {
             fn disable_ctx_menu();

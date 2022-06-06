@@ -37,6 +37,7 @@ async-tungstenite = { version = "*", features = ["async-std-runtime"]}
 futures-util = "*"
 async-std = "*"
 futures = "*"
+crossbeam-channel = "*"
 
 [profile.release]
 opt-level = 3

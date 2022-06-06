@@ -1,4 +1,4 @@
-use wasm_rs_shared_channel::spsc::{Sender, Receiver};
+use crossbeam_channel::{Receiver, Sender};
 
 chessbik_commons::derive_wrapper!(
     pub struct WebsocketReceiver(pub Receiver<String>);

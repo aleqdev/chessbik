@@ -1148,6 +1148,7 @@ dependencies = [
  "chessbik-board",
  "chessbik-commons",
  "clipboard",
+ "crossbeam-channel",
  "derive_more",
  "futures",
  "futures-util",

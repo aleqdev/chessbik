@@ -1,5 +1,11 @@
-use bevy::prelude::{ResMut, default};
-use bevy_egui::{EguiContext, egui::{Visuals, Rounding, Stroke, Color32, style::{Widgets, WidgetVisuals}}};
+use bevy::prelude::{default, ResMut};
+use bevy_egui::{
+    egui::{
+        style::{WidgetVisuals, Widgets},
+        Color32, Rounding, Stroke, Visuals,
+    },
+    EguiContext,
+};
 
 pub fn system(mut egui_ctx: ResMut<EguiContext>) {
     egui_ctx.ctx_mut().set_visuals(Visuals {
