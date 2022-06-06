@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use super::receiver::{WebsocketReceiver, WebsocketSender};
+use super::resources::{WebsocketReceiver, WebsocketSender};
 
 pub fn system(
     world: &mut World
@@ -28,11 +28,9 @@ pub fn system(
 
     let cloned_ws = ws.clone();
     let h = move || {
-        loop {
-            while let Some(str) = send_rx.recv(None).expect("failed to read from send_rx") {
-                cloned_ws.send_with_str(&str)
-                    .expect("failed to send websocket message");
-            }
+        while let Some(str) = send_rx.recv(None).expect("failed to read from send_rx") {
+            cloned_ws.send_with_str(&str)
+                .expect("failed to send websocket message");
         }
     };
     let h = Closure::wrap(Box::new(h) as Box<dyn FnMut()>);

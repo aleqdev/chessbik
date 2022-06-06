@@ -29,16 +29,12 @@ pub fn system (
 
         let read_future = async move {
             while let Some(message) = read.next().await {
+                let message = message.expect("failed to receive message from websocket");
                 match message {
-                    Ok(message) => {
-                        match message {
-                            Message::Text(message) => {
-                                recv_tx.send(message).expect("failed to send recv_tx");
-                            },
-                            _ => {}
-                        }
+                    Message::Text(message) => {
+                        recv_tx.send(message).expect("failed to send recv_tx");
                     },
-                    Err(err) => panic!("failed to receive message from websocket:\n{err}")
+                    _ => {}
                 }
             }
         };
