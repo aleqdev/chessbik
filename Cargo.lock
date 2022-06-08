@@ -1147,6 +1147,7 @@ dependencies = [
  "bevy_stl",
  "chessbik-board",
  "chessbik-commons",
+ "chessbik-derive-wrapper",
  "clipboard",
  "crossbeam-channel",
  "derive_more",
@@ -1154,6 +1155,7 @@ dependencies = [
  "futures-util",
  "js-sys",
  "lazy_static",
+ "serde_json",
  "smooth-bevy-cameras",
  "wasm-bindgen",
  "wasm-rs-shared-channel",
@@ -1163,16 +1165,26 @@ dependencies = [
 [[package]]
 name = "chessbik-board"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-board#39d85541b870c3efb4552b67de413a3aa821ae6c"
+source = "git+https://github.com/necromfox/chessbik-board#b8a2eb87917069fd8caabc9bdeb9ca3b45bcc6be"
 dependencies = [
- "chessbik-commons",
+ "chessbik-derive-wrapper",
  "derive_more",
 ]
 
 [[package]]
 name = "chessbik-commons"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-commons#13e1bfc5a333a8254acdd8800abf129fffc8720a"
+source = "git+https://github.com/necromfox/chessbik-commons#49e170ed027fe7984d8887eea3e81415009bd9a5"
+dependencies = [
+ "chessbik-board",
+ "chessbik-derive-wrapper",
+ "serde",
+]
+
+[[package]]
+name = "chessbik-derive-wrapper"
+version = "0.1.0"
+source = "git+https://github.com/necromfox/chessbik-derive-wrapper#23ac7b76c819db63eefd470758b76cdf26be7f2d"
 dependencies = [
  "derive_more",
 ]
@@ -2133,9 +2145,9 @@ checksum = "dfa686283ad6dd069f105e5ab091b04c62850d3e4cf5d67debad1933f55023df"
 
 [[package]]
 name = "http"
-version = "0.2.7"
+version = "0.2.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ff8670570af52249509a86f5e3e18a08c60b177071826898fde8997cf5f6bfbb"
+checksum = "75f43d41e26995c17e71ee126451dd3941010b0514a81a9d11f3b341debc2399"
 dependencies = [
  "bytes",
  "fnv",
@@ -3596,11 +3608,11 @@ dependencies = [
 
 [[package]]
 name = "tracing-core"
-version = "0.1.26"
+version = "0.1.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f54c8ca710e81886d498c2fd3331b56c93aa248d49de2222ad2742247c60072f"
+checksum = "7709595b8878a4965ce5e87ebf880a7d39c9afc6837721b21a5a816a8117d921"
 dependencies = [
- "lazy_static",
+ "once_cell",
  "valuable",
 ]
 

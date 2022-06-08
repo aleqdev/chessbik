@@ -54,7 +54,8 @@ function copyTextToClipboard(text) {
       var msg = successful ? 'successful' : 'unsuccessful';
       console.log('Copying text command was ' + msg);
     } catch (err) {
-      console.log('Oops, unable to copy');
+      console.log('Oops, unable to copy:');
+      console.log(text);
     }
   
     document.body.removeChild(textArea);

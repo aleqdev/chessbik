@@ -1,12 +1,12 @@
 #[cfg(target_arch = "wasm32")]
 mod implementation {
-    mod wasm;
+    pub mod wasm;
     pub use wasm::{WebsocketReceiver, WebsocketSender};
 }
 
 #[cfg(not(target_arch = "wasm32"))]
 mod implementation {
-    mod regular;
+    pub mod regular;
     pub use regular::{WebsocketReceiver, WebsocketSender};
 }
 

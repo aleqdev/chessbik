@@ -5,6 +5,7 @@ mod copy_lobby_plugin;
 mod custom_picking_plugin;
 mod disable_ctx_menu_plugin;
 mod menu_plugin;
+mod new_game_plugin;
 mod resources_plugin;
 mod websocket_plugin;
 
@@ -19,5 +20,6 @@ impl PluginGroup for Plugins {
         group.add(copy_lobby_plugin::CopyLobbyPlugin);
         group.add(disable_ctx_menu_plugin::DisableCtxMenuPlugin);
         group.add(websocket_plugin::WebsocketPlugin);
+        group.add(new_game_plugin::NewGamePlugin);
     }
 }

@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use chessbik_board::PiecePosition;
 
-chessbik_commons::derive_wrapper!(
+chessbik_derive_wrapper::derive_wrapper!(
     #[derive(Clone, Copy)]
     pub struct Board2CubeTransforms([Transform; 54]);
 );

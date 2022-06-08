@@ -4,12 +4,12 @@ pub struct UiLobbyCopyEvent;
 #[derive(Default)]
 pub struct UiNewGameEvent;
 
-chessbik_commons::derive_wrapper!(
-    #[derive(Default)]
-    pub struct WebsocketSendEvent(pub String);
+use chessbik_commons::WsMessage;
+
+chessbik_derive_wrapper::derive_wrapper!(
+    pub struct WebsocketSendEvent(pub WsMessage);
 );
 
-chessbik_commons::derive_wrapper!(
-    #[derive(Default)]
-    pub struct WebsocketReceiveEvent(pub String);
+chessbik_derive_wrapper::derive_wrapper!(
+    pub struct WebsocketReceiveEvent(pub WsMessage);
 );

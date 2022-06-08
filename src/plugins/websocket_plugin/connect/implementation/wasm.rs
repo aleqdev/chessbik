@@ -8,8 +8,8 @@ pub fn connect_system(world: &mut World) {
     use wasm_rs_shared_channel::spsc;
     use web_sys::{MessageEvent, WebSocket};
 
-    let (recv_tx, recv_rx) = spsc::channel::<String>(128).split();
-    let (send_tx, send_rx) = spsc::channel::<String>(128).split();
+    let (recv_tx, recv_rx) = spsc::channel::<String>(2048).split();
+    let (send_tx, send_rx) = spsc::channel::<String>(2048).split();
 
     world.insert_non_send_resource(WebsocketReceiver(recv_rx));
     world.insert_non_send_resource(WebsocketSender(send_tx));
@@ -25,14 +25,13 @@ pub fn connect_system(world: &mut World) {
     }) as Box<dyn FnMut(MessageEvent)>);
 
     let cloned_ws = ws.clone();
-    let h = move || {
+    let h = Closure::wrap(Box::new(move || {
         while let Some(str) = send_rx.recv(None).expect("failed to read from send_rx") {
             cloned_ws
                 .send_with_str(&str)
                 .expect("failed to send websocket message");
         }
-    };
-    let h = Closure::wrap(Box::new(h) as Box<dyn FnMut()>);
+    }) as Box<dyn FnMut()>);
 
     let onopen_callback = Closure::wrap(Box::new(move |_| {
         web_sys::window()

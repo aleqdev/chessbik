@@ -1,5 +1,6 @@
 use bevy::prelude::*;
-use chessbik_board::{Board, GetAvailableMoves};
+use chessbik_board::Board;
+use chessbik_commons::Cell;
 
 use crate::{
     commons::{self, SelectedPieceReference},
@@ -9,7 +10,7 @@ use crate::{
 pub fn system(
     selected: Res<SelectedPieceReference>,
     mut indicator: ResMut<AvailableMovesIndicator>,
-    board: Res<Board>,
+    board: Res<Board<Cell>>,
     asset_server: Res<AssetServer>,
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,

@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy_mod_picking::{Hover, Selection};
 use chessbik_board::Board;
+use chessbik_commons::Cell;
 
 use crate::{
     app_materials::AppMaterials,
@@ -33,7 +34,7 @@ pub fn system(
             Without<crate::commons::PieceMarker>,
         ),
     >,
-    board: Res<Board>,
+    board: Res<Board<Cell>>,
     materials: Res<AppMaterials>,
     mut selected_reference: ResMut<SelectedPieceReference>,
 ) {
@@ -44,7 +45,7 @@ pub fn system(
             continue;
         }
 
-        match board.at(*fref).value {
+        match board.at(*fref).piece {
             Some(piece) => match hover.hovered() {
                 true => *mat = commons::get_piece_material_hovered(piece.color, &materials),
                 false => *mat = commons::get_piece_material(piece.color, &materials),

@@ -14,7 +14,7 @@ pub fn send_system(
 ) {
     for e in send_events.iter() {
         send_stream
-            .send(e.to_string())
+            .send(serde_json::to_string(&**e).expect("failed to serialize event"))
             .expect("failed to convert websocket send event");
     }
 }
@@ -26,8 +26,11 @@ pub fn receive_system(
     use crossbeam_channel::TryRecvError;
 
     loop {
-        match recv_stream.try_recv() {
-            Ok(str) => recv_events.send(str.into()),
+        let recv = recv_stream.try_recv();
+        match recv {
+            Ok(str) => recv_events.send(WebsocketReceiveEvent(
+                serde_json::from_str(&str).expect("failed to serialize event"),
+            )),
             Err(err) => match err {
                 TryRecvError::Empty => break,
                 TryRecvError::Disconnected => panic!("failed to read from recv_rx"),

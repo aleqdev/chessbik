@@ -33,7 +33,7 @@ pub fn spawn_cube_side_cells(
                 highlighted: (query.highlighted_material_getter)(&state.materials),
             })
             .insert_bundle(bevy_mod_picking::PickableBundle::default())
-            .with_children(|parent| match cell.value {
+            .with_children(|parent| match cell.piece {
                 None => {}
                 Some(Piece { ty, color }) => {
                     let mesh = state.asset_server.load(commons::get_piece_stl(ty));
