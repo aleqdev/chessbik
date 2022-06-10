@@ -12,7 +12,7 @@ pub fn system(mut commands: Commands) {
                 smoothing_weight: 0.5,
                 ..default()
             },
-            *crate::CAMERA_POSITION,
+            crate::CAMERA_POSITION,
             Vec3::ZERO,
         ))
         .with_children(|parent| {

@@ -1,26 +1,14 @@
-pub fn get_piece_material(color: PieceColor, materials: &AppMaterials) -> MaterialTy {
+pub fn get_piece_material(color: PieceColor, app_assets: &AppAssets) -> MaterialTy {
     match color {
-        PieceColor::WHITE => materials.pieces.default_white.clone(),
-        PieceColor::BLACK => materials.pieces.default_black.clone(),
+        PieceColor::WHITE => app_assets.pieces.default_white.clone(),
+        PieceColor::BLACK => app_assets.pieces.default_black.clone(),
     }
 }
 
-pub fn get_piece_material_hovered(color: PieceColor, materials: &AppMaterials) -> MaterialTy {
+pub fn get_piece_material_hovered(color: PieceColor, app_assets: &AppAssets) -> MaterialTy {
     match color {
-        PieceColor::WHITE => materials.pieces.highlighted_white.clone(),
-        PieceColor::BLACK => materials.pieces.highlighted_black.clone(),
-    }
-}
-
-pub fn get_piece_stl(ty: PieceTy) -> std::path::PathBuf {
-    match ty {
-        PieceTy::PAWN => "pawn.stl".into(),
-        PieceTy::ROOK => "rook.stl".into(),
-        PieceTy::KNIGHT => "knight.stl".into(),
-        PieceTy::BISHOP => "bishop.stl".into(),
-        PieceTy::QUEEN => "queen.stl".into(),
-        PieceTy::KING => "king.stl".into(),
-        PieceTy::MAGE => "mage.stl".into(),
+        PieceColor::WHITE => app_assets.pieces.highlighted_white.clone(),
+        PieceColor::BLACK => app_assets.pieces.highlighted_black.clone(),
     }
 }
 
@@ -28,7 +16,16 @@ pub fn get_piece_stl(ty: PieceTy) -> std::path::PathBuf {
 pub struct PieceMarker;
 
 #[derive(Component)]
+pub struct PlaneMarker;
+
+#[derive(Component)]
 pub struct CubeMarker;
+
+pub struct PlayerNameBuffer(pub String);
+
+pub struct JoinGameBuffer(pub String);
+
+pub struct PlayerTokenBuffer(pub Option<PlayerToken>);
 
 #[derive(Default)]
 pub struct SelectedPieceReference(pub Option<BoardReference>);
@@ -39,13 +36,45 @@ pub struct CellMaterials {
     pub highlighted: Handle<StandardMaterial>,
 }
 
+impl CellMaterials {
+    pub fn from_side(side: Side, app_assets: &AppAssets) -> Self {
+        match side {
+            Side::TOP => Self {
+                default: app_assets.planes.default.top.clone(),
+                highlighted: app_assets.planes.highlighted.top.clone(),
+            },
+            Side::LEFT => Self {
+                default: app_assets.planes.default.left.clone(),
+                highlighted: app_assets.planes.highlighted.left.clone(),
+            },
+            Side::FORWARD => Self {
+                default: app_assets.planes.default.forward.clone(),
+                highlighted: app_assets.planes.highlighted.forward.clone(),
+            },
+            Side::RIGHT => Self {
+                default: app_assets.planes.default.right.clone(),
+                highlighted: app_assets.planes.highlighted.right.clone(),
+            },
+            Side::BACK => Self {
+                default: app_assets.planes.default.back.clone(),
+                highlighted: app_assets.planes.highlighted.back.clone(),
+            },
+            Side::BOTTOM => Self {
+                default: app_assets.planes.default.bottom.clone(),
+                highlighted: app_assets.planes.highlighted.bottom.clone(),
+            },
+        }
+    }
+}
+
 use bevy::{
     pbr::StandardMaterial,
     prelude::{Component, Handle},
 };
-use chessbik_board::{PieceColor, PieceTy};
+use chessbik_board::PieceColor;
+use chessbik_commons::{PlayerToken, Side};
 
 use crate::{
-    app_materials::{AppMaterials, MaterialTy},
+    app_assets::{AppAssets, MaterialTy},
     BoardReference,
 };

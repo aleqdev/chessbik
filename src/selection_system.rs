@@ -4,7 +4,7 @@ use chessbik_board::Board;
 use chessbik_commons::Cell;
 
 use crate::{
-    app_materials::AppMaterials,
+    app_assets::AppAssets,
     commons::{self, CellMaterials, SelectedPieceReference},
     BoardReference,
 };
@@ -35,7 +35,7 @@ pub fn system(
         ),
     >,
     board: Res<Board<Cell>>,
-    materials: Res<AppMaterials>,
+    materials: Res<AppAssets>,
     mut selected_reference: ResMut<SelectedPieceReference>,
 ) {
     for (mut mat, fref, hover, selection) in query_pieces.iter_mut() {

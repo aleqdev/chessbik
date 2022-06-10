@@ -1,23 +1,23 @@
 use bevy::prelude::*;
 use bevy_stl::StlPlugin;
-use chessbik_commons::Cell;
 
-pub mod app_materials;
+pub mod app_assets;
+pub mod app_state;
 pub mod available_moves_indicator;
 pub mod board_reference;
-pub mod board_to_cube_transforms;
 pub mod commons;
 pub mod consts;
-pub mod default_cube;
+pub mod cube_transform;
 pub mod events;
+pub mod game_record;
 
+pub use app_state::*;
 pub use available_moves_indicator::*;
 pub use board_reference::*;
-pub use board_to_cube_transforms::*;
 pub use consts::*;
+pub use game_record::*;
 
 mod available_moves_indication_system;
-mod initialization_plugin;
 mod selection_system;
 
 mod plugins;
@@ -33,10 +33,8 @@ fn main() {
             title: "Chessbik".into(),
             ..Default::default()
         })
-        .init_resource::<chessbik_board::Board<Cell>>()
         .insert_resource(ClearColor(Color::BLACK))
-        .add_startup_system(initialization_plugin::system)
-        .add_system(selection_system::system)
-        .add_system(available_moves_indication_system::system)
+        //.add_system(selection_system::system)
+        //.add_system(available_moves_indication_system::system)
         .run();
 }

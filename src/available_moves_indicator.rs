@@ -1,7 +1,7 @@
 use bevy::prelude::{shape::Plane, *};
 use chessbik_board::PieceMove;
 
-use crate::Board2CubeTransforms;
+use crate::cube_transform;
 
 #[derive(Default)]
 pub struct AvailableMovesIndicator {
@@ -17,7 +17,6 @@ impl AvailableMovesIndicator {
         asset_server: &Res<AssetServer>,
         meshes: &mut ResMut<Assets<Mesh>>,
         materials: &mut ResMut<Assets<StandardMaterial>>,
-        transforms: &Res<Board2CubeTransforms>,
         cube: Entity,
     ) where
         Iter: Iterator,
@@ -32,7 +31,8 @@ impl AvailableMovesIndicator {
 
         commands.entity(cube).with_children(|parent| {
             for m in self.moves.iter() {
-                let mut transform = transforms.transform(m.pos);
+                let (pos, quat) = cube_transform::transform(m.pos);
+                let mut transform = Transform::from_translation(pos).with_rotation(quat);
                 transform.translation += transform.up() * crate::MOVE_INDICATOR_OFFSET;
 
                 self.indicators.push(

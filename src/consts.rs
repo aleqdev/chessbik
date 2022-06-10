@@ -1,6 +1,4 @@
-use bevy::prelude::*;
-
-use crate::default_cube::DefaultCubeQuery;
+use bevy::{math::const_vec3, prelude::*};
 
 pub const LIGHT_INTENSITY: f32 = 48000.;
 pub const LIGHT_COLOR: Color = Color::WHITE;
@@ -21,19 +19,8 @@ pub const MOVE_INDICATOR_COLOR: Color = Color::rgb(1., 0., 1.);
 
 pub const WS_URL: &'static str = "";
 
-lazy_static::lazy_static! {
-    pub static ref DEFAULT_CUBE_QUERIES: [&'static DefaultCubeQuery; 6] = [
-        &*crate::default_cube::TOP,
-        &*crate::default_cube::LEFT,
-        &*crate::default_cube::FORWARD,
-        &*crate::default_cube::RIGHT,
-        &*crate::default_cube::BACK,
-        &*crate::default_cube::BOTTOM,
-    ];
+pub const DEFAULT_CUBE_SCALE: Vec3 = const_vec3!([0.3, 0.3, 0.3]);
 
-    pub static ref DEFAULT_CUBE_SCALE: Vec3 = Vec3::splat(0.3);
+pub const PIECE_SCALE: Vec3 = const_vec3!([0.02, 0.02, 0.02]);
 
-    pub static ref PIECE_SCALE: Vec3 = Vec3::splat(0.02);
-
-    pub static ref CAMERA_POSITION: Vec3 = Vec3::new(7., 3., 4.);
-}
+pub const CAMERA_POSITION: Vec3 = const_vec3!([7., 3., 4.]);

@@ -1151,6 +1151,7 @@ dependencies = [
  "clipboard",
  "crossbeam-channel",
  "derive_more",
+ "egui_extras",
  "futures",
  "futures-util",
  "js-sys",
@@ -1165,16 +1166,17 @@ dependencies = [
 [[package]]
 name = "chessbik-board"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-board#b8a2eb87917069fd8caabc9bdeb9ca3b45bcc6be"
+source = "git+https://github.com/necromfox/chessbik-board#c4f188972f6dc50a2db76aad156bd84461da9035"
 dependencies = [
  "chessbik-derive-wrapper",
  "derive_more",
+ "serde",
 ]
 
 [[package]]
 name = "chessbik-commons"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-commons#49e170ed027fe7984d8887eea3e81415009bd9a5"
+source = "git+https://github.com/necromfox/chessbik-commons#b6914117e50ce405964cc529cfa0fec1237747da"
 dependencies = [
  "chessbik-board",
  "chessbik-derive-wrapper",
@@ -1634,6 +1636,15 @@ dependencies = [
  "ahash",
  "epaint",
  "nohash-hasher",
+]
+
+[[package]]
+name = "egui_extras"
+version = "0.18.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "877bfcce06463cdbcfd7f4efd57608b1384d6d9ae03b33e503fbba1d1a899a52"
+dependencies = [
+ "egui",
 ]
 
 [[package]]
@@ -3215,7 +3226,7 @@ version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bfa0f585226d2e68097d4f95d113b15b83a82e819ab25717ec0590d9584ef366"
 dependencies = [
- "semver 1.0.9",
+ "semver 1.0.10",
 ]
 
 [[package]]
@@ -3267,9 +3278,9 @@ dependencies = [
 
 [[package]]
 name = "semver"
-version = "1.0.9"
+version = "1.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8cb243bdfdb5936c8dc3c45762a19d12ab4550cdc753bc247637d4ec35a040fd"
+checksum = "a41d061efea015927ac527063765e73601444cdc344ba855bc7bd44578b25e1c"
 
 [[package]]
 name = "semver-parser"
@@ -3585,9 +3596,9 @@ dependencies = [
 
 [[package]]
 name = "tracing"
-version = "0.1.34"
+version = "0.1.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5d0ecdcb44a79f0fe9844f0c4f33a342cbcbb5117de8001e6ba0dc2351327d09"
+checksum = "a400e31aa60b9d44a52a8ee0343b5b18566b03a8321e0d321f695cf56e940160"
 dependencies = [
  "cfg-if 1.0.0",
  "pin-project-lite",

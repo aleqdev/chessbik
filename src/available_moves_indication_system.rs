@@ -4,7 +4,7 @@ use chessbik_commons::Cell;
 
 use crate::{
     commons::{self, SelectedPieceReference},
-    AvailableMovesIndicator, Board2CubeTransforms,
+    AvailableMovesIndicator,
 };
 
 pub fn system(
@@ -15,7 +15,6 @@ pub fn system(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
-    transforms: Res<Board2CubeTransforms>,
     cube: Query<Entity, With<commons::CubeMarker>>,
 ) {
     if selected.is_changed() {
@@ -29,7 +28,6 @@ pub fn system(
                     &asset_server,
                     &mut meshes,
                     &mut materials,
-                    &transforms,
                     cube.single(),
                 )
             }
