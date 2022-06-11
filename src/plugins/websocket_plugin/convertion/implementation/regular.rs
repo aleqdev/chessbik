@@ -6,10 +6,13 @@ use chessbik_commons::WsMessage;
 
 use crate::{
     events::{
-        WsCreateGameCallbackEvent, WsRequestBoardCallbackEvent, WsRequestPlayerOwningCallbackEvent,
-        WsRequestPlayerTokenCallbackEvent, WsSendEvent,
+        WsConsiderSubscriptionEvent, WsRequestBoardCallbackEvent,
+        WsRequestPlayerTokenCallbackEvent, WsConsiderRequestingBoardEvent,
+        WsSendEvent, WsConsiderRequestingPlayersEvent, WsRequestPlayersCallbackEvent
     },
-    plugins::websocket_plugin::resources::{WebsocketReceiver, WebsocketSender},
+    plugins::websocket_plugin::{
+        resources::{WebsocketReceiver, WebsocketSender},
+    },
 };
 
 pub fn send_system(
@@ -25,10 +28,12 @@ pub fn send_system(
 
 pub fn receive_system(
     recv_stream: NonSend<WebsocketReceiver>,
-    mut create_game_callback_events: EventWriter<WsCreateGameCallbackEvent>,
+    mut consider_subscription_events: EventWriter<WsConsiderSubscriptionEvent>,
     mut request_board_callback_events: EventWriter<WsRequestBoardCallbackEvent>,
     mut request_player_token_callback_events: EventWriter<WsRequestPlayerTokenCallbackEvent>,
-    mut request_player_owning_callback_events: EventWriter<WsRequestPlayerOwningCallbackEvent>,
+    mut request_players_callback_events: EventWriter<WsRequestPlayersCallbackEvent>,
+    mut consider_requesting_board_events: EventWriter<WsConsiderRequestingBoardEvent>,
+    mut consider_requesting_players_events: EventWriter<WsConsiderRequestingPlayersEvent>,
 ) {
     use crossbeam_channel::TryRecvError;
 
@@ -37,8 +42,8 @@ pub fn receive_system(
         match recv {
             Ok(str) => {
                 match serde_json::from_str::<WsMessage>(&str).expect("failed to serialize event") {
-                    WsMessage::CreateGameCallback(lobby) => {
-                        create_game_callback_events.send(WsCreateGameCallbackEvent(lobby))
+                    WsMessage::ConsiderSubscription(lobby) => {
+                        consider_subscription_events.send(WsConsiderSubscriptionEvent(lobby))
                     }
                     WsMessage::RequestBoardCallback(board) => {
                         request_board_callback_events.send(WsRequestBoardCallbackEvent(board))
@@ -47,9 +52,14 @@ pub fn receive_system(
                         request_player_token_callback_events
                             .send(WsRequestPlayerTokenCallbackEvent(token))
                     }
-                    WsMessage::RequestPlayerOwningCallback(color, owning) => {
-                        request_player_owning_callback_events
-                            .send(WsRequestPlayerOwningCallbackEvent((color, owning)))
+                    WsMessage::RequestPlayersCallback(players) => {
+                        request_players_callback_events.send(WsRequestPlayersCallbackEvent(players))
+                    }
+                    WsMessage::ConsiderRequestingBoard => {
+                        consider_requesting_board_events.send(WsConsiderRequestingBoardEvent)
+                    }
+                    WsMessage::ConsiderRequestingPlayers => {
+                        consider_requesting_players_events.send(WsConsiderRequestingPlayersEvent)
                     }
 
                     // Server is not panicking because receiving unexpected messages
@@ -59,11 +69,14 @@ pub fn receive_system(
                     m @ WsMessage::CreateGame
                     | m @ WsMessage::RequestBoard(_)
                     | m @ WsMessage::RequestPlayerToken
-                    | m @ WsMessage::RequestOpponentAddition(_, _, _)
-                    | m @ WsMessage::RequestEngineAddition(_, _, _)
-                    | m @ WsMessage::RequestPlayerOwning(_, _, _)
-                    | m @ WsMessage::RequestPlayerRemoval(_, _, _)
-                    | m @ WsMessage::JoinGame(_) => panic!("got unexpected ws message{:?}", m),
+                    | m @ WsMessage::RequestOpponentAddition(..)
+                    | m @ WsMessage::RequestEngineAddition(..)
+                    | m @ WsMessage::RequestPlayerRemoval(..)
+                    | m @ WsMessage::RequestPlayers(..)
+                    | m @ WsMessage::RequestPlayerNameUpdate(..)
+                    | m @ WsMessage::RequestGameSubscription(..) => {
+                        panic!("got unexpected ws message{:?}", m)
+                    }
                 }
             }
             Err(err) => match err {

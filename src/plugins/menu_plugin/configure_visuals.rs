@@ -45,7 +45,7 @@ pub fn system(mut egui_ctx: ResMut<EguiContext>) {
                 fg_stroke: Stroke::new(2.0, Color32::from_gray(210)),
                 rounding: Rounding::same(0.0),
                 expansion: 0.0,
-            }
+            },
         },
         ..default()
     });

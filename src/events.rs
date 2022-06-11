@@ -1,5 +1,5 @@
 use chessbik_board::Board;
-use chessbik_commons::{Cell, Lobby, PlayerColor, PlayerToken, WsMessage};
+use chessbik_commons::{Cell, Lobby, PlayerColor, PlayerToken, PlayersRecord, WsMessage};
 
 #[derive(Default)]
 pub struct UiLobbyCopyEvent;
@@ -12,6 +12,9 @@ pub struct UiLeaveGameEvent;
 
 #[derive(Default)]
 pub struct UiJoinGameEvent;
+
+#[derive(Default)]
+pub struct UiChangeNameEvent;
 
 pub struct UiRequestEngineEvent(pub PlayerColor);
 
@@ -27,7 +30,7 @@ chessbik_derive_wrapper::derive_wrapper!(
 );
 
 chessbik_derive_wrapper::derive_wrapper!(
-    pub struct WsCreateGameCallbackEvent(pub Lobby);
+    pub struct WsConsiderSubscriptionEvent(pub Lobby);
 );
 
 chessbik_derive_wrapper::derive_wrapper!(
@@ -39,5 +42,9 @@ chessbik_derive_wrapper::derive_wrapper!(
 );
 
 chessbik_derive_wrapper::derive_wrapper!(
-    pub struct WsRequestPlayerOwningCallbackEvent(pub (PlayerColor, bool));
+    pub struct WsRequestPlayersCallbackEvent(pub PlayersRecord);
 );
+
+pub struct WsConsiderRequestingBoardEvent;
+
+pub struct WsConsiderRequestingPlayersEvent;

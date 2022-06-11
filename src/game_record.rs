@@ -1,18 +1,5 @@
 use chessbik_board::Board;
-use chessbik_commons::{Cell, Lobby};
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub enum PlayerRecord {
-    None,
-    Engine,
-    Opponent(String, bool),
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct PlayersRecord {
-    pub white: PlayerRecord,
-    pub black: PlayerRecord,
-}
+use chessbik_commons::{Cell, Lobby, PlayerRecord, PlayersRecord};
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct GameRecord {

@@ -32,6 +32,7 @@ pub fn system(
             commands.entity(cube.id).despawn_recursive();
             commands.remove_resource::<Cube>();
         }
+        *last_board = None;
     }
 }
 
