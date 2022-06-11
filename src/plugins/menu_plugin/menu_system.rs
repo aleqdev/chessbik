@@ -130,7 +130,7 @@ pub fn system(
 
     let make_ingame_menu_second_column_second_strip = |ui: &mut egui::Ui| {
         ui.vertical_centered(|ui| {
-            ui.label("♙ vs ♟");
+            ui.label("♟ vs ♙");
         });
     };
 

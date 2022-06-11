@@ -1176,7 +1176,7 @@ dependencies = [
 [[package]]
 name = "chessbik-commons"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-commons#e7ddaa5f4f0a31d9e332b40481d8c674e694714e"
+source = "git+https://github.com/necromfox/chessbik-commons#68835995e33fd8ac130bc55325684dad95e55407"
 dependencies = [
  "chessbik-board",
  "chessbik-derive-wrapper",
