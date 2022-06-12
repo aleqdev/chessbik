@@ -80,9 +80,11 @@ pub fn system(
 
     let make_idle_menu_second_column = |ui: &mut egui::Ui| {
         ui.horizontal_centered(|ui| {
-            if ui.button("join game:").clicked() {
-                join_game_writer.send_default();
-            }
+            ui.add_enabled_ui(join_game.0.len() == 14, |ui| {
+                if ui.button("join game:").clicked() {
+                    join_game_writer.send_default();
+                }
+            });
             ui.add(
                 egui::TextEdit::singleline(&mut join_game.0)
                     .desired_width(160.)

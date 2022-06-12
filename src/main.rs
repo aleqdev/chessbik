@@ -22,6 +22,9 @@ mod selection_system;
 
 mod plugins;
 
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)

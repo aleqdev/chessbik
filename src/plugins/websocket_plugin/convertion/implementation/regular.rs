@@ -75,7 +75,8 @@ pub fn receive_system(
                     | m @ WsMessage::RequestPlayers(..)
                     | m @ WsMessage::RequestPlayerNameUpdate(..)
                     | m @ WsMessage::RequestGameSubscription(..)
-                    | m @ WsMessage::RequestGameUnsubscription(..) => {
+                    | m @ WsMessage::RequestGameUnsubscription(..)
+                    | m @ WsMessage::Hb => {
                         panic!("got unexpected ws message{:?}", m)
                     }
                 }
