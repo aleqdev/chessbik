@@ -4,7 +4,7 @@ use chessbik_commons::{IsOwning, PlayerColor, PlayerRecord};
 use egui_extras::{Size, StripBuilder};
 
 use crate::{
-    commons::{JoinGameBuffer, PlayerNameBuffer},
+    commons::PlayerNameBuffer,
     events::{
         UiJoinGameEvent, UiLeaveGameEvent, UiLobbyCopyEvent, UiNewGameEvent, UiRequestEngineEvent,
         UiRequestOpponentEvent, UiChangeNameEvent,
@@ -22,7 +22,6 @@ pub fn system(
     mut request_opponent_writer: EventWriter<UiRequestOpponentEvent>,
     mut change_name_writer: EventWriter<UiChangeNameEvent>,
     mut name: ResMut<PlayerNameBuffer>,
-    mut join_game: ResMut<JoinGameBuffer>,
     mut lobby_copied: Local<bool>,
     game_record: Option<Res<GameRecord>>,
 ) {
@@ -80,17 +79,14 @@ pub fn system(
 
     let make_idle_menu_second_column = |ui: &mut egui::Ui| {
         ui.horizontal_centered(|ui| {
-            ui.add_enabled_ui(join_game.0.len() == 14, |ui| {
-                if ui.button("join game:").clicked() {
-                    join_game_writer.send_default();
+            if ui.button("join game from clipboard").clicked() {
+                let clip = bevy_egui::EguiClipboard::default().get_contents();
+                if let Some(clip) = clip {
+                    if clip.len() == 14 {
+                        join_game_writer.send(UiJoinGameEvent(clip))
+                    }
                 }
-            });
-            ui.add(
-                egui::TextEdit::singleline(&mut join_game.0)
-                    .desired_width(160.)
-                    .hint_text("paste lobby")
-                    .password(true),
-            );
+            }
         });
     };
 

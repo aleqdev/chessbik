@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use chessbik_commons::{Lobby, WsMessage};
 
 use crate::{
-    commons::{JoinGameBuffer, PlayerTokenBuffer},
+    commons::PlayerTokenBuffer,
     events::{UiJoinGameEvent, WsSendEvent},
     GameRecord,
 };
@@ -12,12 +12,10 @@ pub fn system(
     mut ws_writer: EventWriter<WsSendEvent>,
     mut commands: Commands,
     token: Res<PlayerTokenBuffer>,
-    lobby: Res<JoinGameBuffer>,
 ) {
     if let Some(ref token) = token.0 {
-        for _ in ui_reader.iter() {
-            let lobby = Lobby::new(lobby.0.clone());
-
+        for e in ui_reader.iter() {
+            let lobby = Lobby::new(e.0.clone());
             commands.insert_resource(GameRecord::new(Lobby::new(lobby.clone())));
             ws_writer.send(WsSendEvent(WsMessage::RequestBoard(lobby.clone())));
             ws_writer.send(WsSendEvent(WsMessage::RequestPlayers(

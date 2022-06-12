@@ -23,8 +23,6 @@ pub struct CubeMarker;
 
 pub struct PlayerNameBuffer(pub String);
 
-pub struct JoinGameBuffer(pub String);
-
 pub struct PlayerTokenBuffer(pub Option<PlayerToken>);
 
 #[derive(Default)]
