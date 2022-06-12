@@ -55,6 +55,8 @@ pub fn receive_system(
                 consider_requesting_players_events.send(WsConsiderRequestingPlayersEvent)
             }
 
+            WsMessage::Hb => {}
+            
             // Server is not panicking because receiving unexpected messages
             // from potentially untrusted websockets should be ignored.
             // But to receive unexpected message from server is a controlflow error
@@ -68,8 +70,7 @@ pub fn receive_system(
             | m @ WsMessage::RequestPlayers(..)
             | m @ WsMessage::RequestPlayerNameUpdate(..)
             | m @ WsMessage::RequestGameSubscription(..)
-            | m @ WsMessage::RequestGameUnsubscription(..)
-            | m @ WsMessage::Hb => {
+            | m @ WsMessage::RequestGameUnsubscription(..) => {
                 panic!("got unexpected ws message{:?}", m)
             }
         }
