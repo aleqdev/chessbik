@@ -100,6 +100,13 @@ impl AppAssets {
                 king: asset_server.load("king.stl"),
                 mage: asset_server.load("mage.stl"),
             },
+            move_indicator_material: materials_assets.add(StandardMaterial {
+                base_color: crate::MOVE_INDICATOR_COLOR,
+                alpha_mode: AlphaMode::Blend,
+                base_color_texture: Some(asset_server.load("move.png")),
+                unlit: true,
+                ..default()
+            }),
         }
     }
 }

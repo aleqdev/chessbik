@@ -1,8 +1,8 @@
 use chessbik_board::PiecePosition;
 
 chessbik_derive_wrapper::derive_wrapper!(
-    #[derive(bevy::prelude::Component, Clone, Copy)]
-    pub struct BoardReference(PiecePosition);
+    #[derive(bevy::prelude::Component, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
+    pub struct BoardReference(pub PiecePosition);
 );
 
 impl Default for BoardReference {

@@ -23,4 +23,4 @@ pub const DEFAULT_CUBE_SCALE: Vec3 = const_vec3!([0.3, 0.3, 0.3]);
 
 pub const PIECE_SCALE: Vec3 = const_vec3!([0.02, 0.02, 0.02]);
 
-pub const CAMERA_POSITION: Vec3 = const_vec3!([7., 3., 4.]);
+pub const CAMERA_POSITION: Vec3 = const_vec3!([2., 2., 2.5]);

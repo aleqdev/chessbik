@@ -21,4 +21,5 @@ pub struct AppAssets {
     pub selected: MaterialTy,
     pub plane_mesh: Handle<Mesh>,
     pub pieces_meshes: PiecesMeshes,
+    pub move_indicator_material: MaterialTy
 }

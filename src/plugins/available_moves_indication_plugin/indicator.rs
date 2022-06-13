@@ -1,7 +1,7 @@
-use bevy::prelude::{shape::Plane, *};
+use bevy::prelude::*;
 use chessbik_board::PieceMove;
 
-use crate::cube_transform;
+use crate::{cube_transform, app_assets::AppAssets, BoardReference};
 
 #[derive(Default)]
 pub struct AvailableMovesIndicator {
@@ -10,13 +10,15 @@ pub struct AvailableMovesIndicator {
 }
 
 impl AvailableMovesIndicator {
+    pub fn clear_indicators(&mut self) {
+        self.indicators.clear();
+    }
+
     pub fn update<Iter>(
         &mut self,
         moves: Iter,
         commands: &mut Commands,
-        asset_server: &Res<AssetServer>,
-        meshes: &mut ResMut<Assets<Mesh>>,
-        materials: &mut ResMut<Assets<StandardMaterial>>,
+        app_assets: &Res<AppAssets>,
         cube: Entity,
     ) where
         Iter: Iterator,
@@ -38,19 +40,13 @@ impl AvailableMovesIndicator {
                 self.indicators.push(
                     parent
                         .spawn_bundle(PbrBundle {
-                            mesh: meshes.add(Mesh::from(Plane {
-                                size: crate::DEFAULT_CUBE_PLANE_SIZE,
-                            })),
-                            material: materials.add(StandardMaterial {
-                                base_color: crate::MOVE_INDICATOR_COLOR,
-                                alpha_mode: AlphaMode::Blend,
-                                base_color_texture: Some(asset_server.load("move.png")),
-                                unlit: true,
-                                ..default()
-                            }),
+                            mesh: app_assets.plane_mesh.clone(),
+                            material: app_assets.move_indicator_material.clone(),
                             transform,
                             ..default()
                         })
+                        .insert_bundle(bevy_mod_picking::PickableBundle::default())
+                        .insert(BoardReference(m.pos))
                         .id(),
                 );
             }

@@ -1181,17 +1181,18 @@ dependencies = [
 [[package]]
 name = "chessbik-board"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-board#c4f188972f6dc50a2db76aad156bd84461da9035"
+source = "git+https://github.com/necromfox/chessbik-board#d6966dbad99883a3824d4f86ae2995604a2e93fd"
 dependencies = [
  "chessbik-derive-wrapper",
  "derive_more",
  "serde",
+ "serde-big-array",
 ]
 
 [[package]]
 name = "chessbik-commons"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-commons#07b99f3797a7ac7a9e02cd8c7a0d88bf65898e1a"
+source = "git+https://github.com/necromfox/chessbik-commons#95cbafdfe14a7a5ff5c8f82037ee34f5efff3be9"
 dependencies = [
  "chessbik-board",
  "chessbik-derive-wrapper",
@@ -3348,6 +3349,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "61ea8d54c77f8315140a05f4c7237403bf38b72704d031543aa1d16abbf517d1"
 dependencies = [
  "serde_derive",
+]
+
+[[package]]
+name = "serde-big-array"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3323f09a748af288c3dc2474ea6803ee81f118321775bffa3ac8f7e65c5e90e7"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

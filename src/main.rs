@@ -3,7 +3,6 @@ use bevy_stl::StlPlugin;
 
 pub mod app_assets;
 pub mod app_state;
-pub mod available_moves_indicator;
 pub mod board_reference;
 pub mod commons;
 pub mod consts;
@@ -12,13 +11,9 @@ pub mod events;
 pub mod game_record;
 
 pub use app_state::*;
-pub use available_moves_indicator::*;
 pub use board_reference::*;
 pub use consts::*;
 pub use game_record::*;
-
-mod available_moves_indication_system;
-mod selection_system;
 
 mod plugins;
 
@@ -34,7 +29,5 @@ fn main() {
             ..Default::default()
         })
         .insert_resource(ClearColor(Color::BLACK))
-        //.add_system(selection_system::system)
-        //.add_system(available_moves_indication_system::system)
         .run();
 }

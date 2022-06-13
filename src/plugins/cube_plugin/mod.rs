@@ -2,8 +2,8 @@ use bevy::prelude::*;
 
 use crate::events::UpdateCubeDisplayEvent;
 
-pub(self) mod compute_board_difference;
-pub(self) mod cube;
+pub mod compute_board_difference;
+pub mod cube;
 mod cube_display;
 mod game_record_tracker;
 
