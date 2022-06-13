@@ -21,7 +21,7 @@ pub struct JoinGamePlugin;
 impl Plugin for JoinGamePlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<UiJoinGameEvent>();
-        app.add_system(implementation::startup_system);
+        app.add_startup_system(implementation::startup_system);
         app.add_system(implementation::system);
     }
 }
