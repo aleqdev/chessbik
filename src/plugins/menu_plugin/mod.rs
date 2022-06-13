@@ -3,6 +3,9 @@ use bevy_egui::EguiPlugin;
 
 mod configure_visuals;
 mod menu_system;
+mod read_clip;
+
+pub use read_clip::read_clip;
 
 pub struct MenuPlugin;
 
