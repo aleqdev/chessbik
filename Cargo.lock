@@ -1173,6 +1173,7 @@ dependencies = [
  "serde_json",
  "smooth-bevy-cameras",
  "wasm-bindgen",
+ "wasm-bindgen-futures",
  "wasm-rs-shared-channel",
  "web-sys",
 ]

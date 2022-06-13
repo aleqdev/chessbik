@@ -28,9 +28,12 @@ web-sys = { version = "*", features = [
     "MessageEvent",
     "ProgressEvent",
     "WebSocket",
-    "Window"
+    "Window",
+    "Permissions",
+    "Navigator"
 ] }
 wasm-bindgen = "*"
+wasm-bindgen-futures = "*"
 js-sys = "*"
 wasm-rs-shared-channel = "*"
 

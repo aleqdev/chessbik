@@ -23,6 +23,7 @@ mod ws_request_board_callback_plugin;
 mod ws_request_player_token_callback_plugin;
 mod ws_request_players_callback_plugin;
 mod ui_change_name_plugin;
+mod join_game_from_clipboard_plugin;
 
 pub struct Plugins;
 
@@ -51,5 +52,6 @@ impl PluginGroup for Plugins {
         group.add(ws_consider_requesting_board_plugin::ConsiderRequestingBoardPlugin);
         group.add(ws_consider_requesting_players_plugin::ConsiderRequestingPlayersPlugin);
         group.add(ui_change_name_plugin::ChangeNamePlugin);
+        group.add(join_game_from_clipboard_plugin::JoinGameFromClipboard);
     }
 }

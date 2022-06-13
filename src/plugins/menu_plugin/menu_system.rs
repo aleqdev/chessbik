@@ -80,10 +80,7 @@ pub fn system(
     let make_idle_menu_second_column = |ui: &mut egui::Ui| {
         ui.horizontal_centered(|ui| {
             if ui.button("join game from clipboard").clicked() {
-                let contents = super::read_clip();
-                if contents.len() == 14 {
-                    join_game_writer.send(UiJoinGameEvent(contents));
-                }
+                join_game_writer.send(UiJoinGameEvent);
             }
         });
     };

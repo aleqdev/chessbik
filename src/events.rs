@@ -11,7 +11,9 @@ pub struct UiNewGameEvent;
 pub struct UiLeaveGameEvent;
 
 #[derive(Default)]
-pub struct UiJoinGameEvent(pub String);
+pub struct UiJoinGameEvent;
+
+pub struct JoinGameFromClipboardEvent(pub String);
 
 #[derive(Default)]
 pub struct UiChangeNameEvent;
