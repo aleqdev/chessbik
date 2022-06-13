@@ -1,6 +1,6 @@
 export function read_clip() {
-( async () => {
+return ( async () => {
     console.log(await navigator.permissions.query({ name: 'clipboard-read' }));
-    console.log(await navigator.clipboard.readText().then(str => {return str}));
+    return await navigator.clipboard.readText();
 })()
 }
