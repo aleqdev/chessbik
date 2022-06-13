@@ -6,13 +6,11 @@ use chessbik_commons::WsMessage;
 
 use crate::{
     events::{
+        WsConsiderRequestingBoardEvent, WsConsiderRequestingPlayersEvent,
         WsConsiderSubscriptionEvent, WsRequestBoardCallbackEvent,
-        WsRequestPlayerTokenCallbackEvent, WsConsiderRequestingBoardEvent,
-        WsSendEvent, WsConsiderRequestingPlayersEvent, WsRequestPlayersCallbackEvent
+        WsRequestPlayerTokenCallbackEvent, WsRequestPlayersCallbackEvent, WsSendEvent,
     },
-    plugins::websocket_plugin::{
-        resources::{WebsocketReceiver, WebsocketSender},
-    },
+    plugins::websocket_plugin::resources::{WebsocketReceiver, WebsocketSender},
 };
 
 pub fn send_system(
@@ -61,7 +59,7 @@ pub fn receive_system(
                     WsMessage::ConsiderRequestingPlayers => {
                         consider_requesting_players_events.send(WsConsiderRequestingPlayersEvent)
                     }
-                    
+
                     WsMessage::Hb => {}
 
                     // Server is not panicking because receiving unexpected messages
@@ -77,7 +75,8 @@ pub fn receive_system(
                     | m @ WsMessage::RequestPlayers(..)
                     | m @ WsMessage::RequestPlayerNameUpdate(..)
                     | m @ WsMessage::RequestGameSubscription(..)
-                    | m @ WsMessage::RequestGameUnsubscription(..) => {
+                    | m @ WsMessage::RequestGameUnsubscription(..)
+                    | m @ WsMessage::RequestMakeMove(..) => {
                         panic!("got unexpected ws message{:?}", m)
                     }
                 }

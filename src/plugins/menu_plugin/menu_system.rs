@@ -6,8 +6,8 @@ use egui_extras::{Size, StripBuilder};
 use crate::{
     commons::PlayerNameBuffer,
     events::{
-        UiJoinGameEvent, UiLeaveGameEvent, UiLobbyCopyEvent, UiNewGameEvent, UiRequestEngineEvent,
-        UiRequestOpponentEvent, UiChangeNameEvent,
+        UiChangeNameEvent, UiJoinGameEvent, UiLeaveGameEvent, UiLobbyCopyEvent, UiNewGameEvent,
+        UiRequestEngineEvent, UiRequestOpponentEvent,
     },
     GameRecord,
 };

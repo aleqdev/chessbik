@@ -14,6 +14,7 @@ lazy_static = "*"
 derive_more = "*"
 serde_json = "*"
 egui_extras = "*"
+itertools = "*"
 
 chessbik-derive-wrapper = { git = "https://github.com/necromfox/chessbik-derive-wrapper" }
 chessbik-commons = { git = "https://github.com/necromfox/chessbik-commons" }

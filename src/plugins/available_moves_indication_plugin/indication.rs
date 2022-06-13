@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 
-
 use crate::{
-    commons::SelectedPieceReference, GameRecord, plugins::cube_plugin::cube::Cube, app_assets::AppAssets
+    app_assets::AppAssets, commons::SelectedPieceReference, plugins::cube_plugin::cube::Cube,
+    GameRecord,
 };
 
 use super::AvailableMovesIndicator;
@@ -20,16 +20,11 @@ pub fn system(
             let board = record.board;
 
             if selected.is_changed() {
-                match selected.into_inner().0 {
-                    None => {}
+                match selected.0 {
+                    None => indicator.update([].into_iter(), &mut commands, &app_assets, cube.id),
                     Some(reference) => {
                         let moves = board.get_available_moves(*reference);
-                        indicator.update(
-                            moves.into_iter(),
-                            &mut commands,
-                            &app_assets,
-                            cube.id
-                        )
+                        indicator.update(moves.into_iter(), &mut commands, &app_assets, cube.id)
                     }
                 }
             }

@@ -14,7 +14,7 @@ pub fn connect_system(world: &mut World) {
     world.insert_non_send_resource(WebsocketReceiver(recv_rx));
     world.insert_non_send_resource(WebsocketSender(send_tx));
 
-    let ws = WebSocket::new("wss://chessbik.herokuapp.com/ws").expect("failed to connect to webscoket");
+    let ws = WebSocket::new(crate::consts::WS_URL).expect("failed to connect to webscoket");
 
     let onmessage_callback = Closure::wrap(Box::new(move |e: MessageEvent| {
         if let Ok(txt) = e.data().dyn_into::<js_sys::JsString>() {

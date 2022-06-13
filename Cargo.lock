@@ -1168,6 +1168,7 @@ dependencies = [
  "egui_extras",
  "futures",
  "futures-util",
+ "itertools",
  "js-sys",
  "lazy_static",
  "serde_json",
@@ -1181,7 +1182,7 @@ dependencies = [
 [[package]]
 name = "chessbik-board"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-board#d6966dbad99883a3824d4f86ae2995604a2e93fd"
+source = "git+https://github.com/necromfox/chessbik-board#d6dc57c11cfce2990502ed50b2a74a838026114f"
 dependencies = [
  "chessbik-derive-wrapper",
  "derive_more",
@@ -1192,7 +1193,7 @@ dependencies = [
 [[package]]
 name = "chessbik-commons"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-commons#95cbafdfe14a7a5ff5c8f82037ee34f5efff3be9"
+source = "git+https://github.com/necromfox/chessbik-commons#50f1090670cd6d45e73fe9224185027969d8b7dc"
 dependencies = [
  "chessbik-board",
  "chessbik-derive-wrapper",
@@ -1662,6 +1663,12 @@ checksum = "877bfcce06463cdbcfd7f4efd57608b1384d6d9ae03b33e503fbba1d1a899a52"
 dependencies = [
  "egui",
 ]
+
+[[package]]
+name = "either"
+version = "1.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e78d4f1cc4ae33bbfc157ed5d5a5ef3bc29227303d595861deb238fcec4e9457"
 
 [[package]]
 name = "emath"
@@ -2283,6 +2290,15 @@ checksum = "f21dcc74995dd4cd090b147e79789f8d65959cbfb5f0b118002db869ea3bd0a0"
 dependencies = [
  "core-foundation-sys 0.6.2",
  "mach 0.2.3",
+]
+
+[[package]]
+name = "itertools"
+version = "0.10.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a9a9d19fa1e79b6215ff29b9d6880b706147f16e9b1dbb1e4e5947b5b02bc5e3"
+dependencies = [
+ "either",
 ]
 
 [[package]]

@@ -16,7 +16,7 @@ pub fn connect_system(mut commands: Commands, pool: Res<AsyncComputeTaskPool>) {
         use futures_util::SinkExt;
         use std::time::Duration;
 
-        let (stream, _) = connect_async("wss://chessbik.herokuapp.com/ws")
+        let (stream, _) = connect_async(crate::consts::WS_URL)
             .await
             .expect("failed to connect to webscoket");
 

@@ -6,9 +6,9 @@ use chessbik_commons::WsMessage;
 
 use crate::{
     events::{
+        WsConsiderRequestingBoardEvent, WsConsiderRequestingPlayersEvent,
         WsConsiderSubscriptionEvent, WsRequestBoardCallbackEvent,
-        WsRequestPlayerTokenCallbackEvent, WsConsiderRequestingBoardEvent,
-        WsSendEvent, WsConsiderRequestingPlayersEvent, WsRequestPlayersCallbackEvent
+        WsRequestPlayerTokenCallbackEvent, WsRequestPlayersCallbackEvent, WsSendEvent,
     },
     plugins::websocket_plugin::resources::{WebsocketReceiver, WebsocketSender},
 };
@@ -42,8 +42,7 @@ pub fn receive_system(
                 request_board_callback_events.send(WsRequestBoardCallbackEvent(board))
             }
             WsMessage::RequestPlayerTokenCallback(token) => {
-                request_player_token_callback_events
-                    .send(WsRequestPlayerTokenCallbackEvent(token))
+                request_player_token_callback_events.send(WsRequestPlayerTokenCallbackEvent(token))
             }
             WsMessage::RequestPlayersCallback(players) => {
                 request_players_callback_events.send(WsRequestPlayersCallbackEvent(players))
@@ -56,7 +55,7 @@ pub fn receive_system(
             }
 
             WsMessage::Hb => {}
-            
+
             // Server is not panicking because receiving unexpected messages
             // from potentially untrusted websockets should be ignored.
             // But to receive unexpected message from server is a controlflow error
@@ -70,7 +69,8 @@ pub fn receive_system(
             | m @ WsMessage::RequestPlayers(..)
             | m @ WsMessage::RequestPlayerNameUpdate(..)
             | m @ WsMessage::RequestGameSubscription(..)
-            | m @ WsMessage::RequestGameUnsubscription(..) => {
+            | m @ WsMessage::RequestGameUnsubscription(..)
+            | m @ WsMessage::RequestMakeMove(..) => {
                 panic!("got unexpected ws message{:?}", m)
             }
         }
