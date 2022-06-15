@@ -1,4 +1,4 @@
-use chessbik_board::{Board, PiecePosition};
+use chessbik_board::Board;
 use chessbik_commons::{
     Cell, Lobby, PieceMovePair, PlayerColor, PlayerToken, PlayersRecord, WsMessage,
 };

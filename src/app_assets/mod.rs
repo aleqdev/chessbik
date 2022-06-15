@@ -22,4 +22,10 @@ pub struct AppAssets {
     pub plane_mesh: Handle<Mesh>,
     pub pieces_meshes: PiecesMeshes,
     pub move_indicator_material: MaterialTy,
+    pub mage_move_mesh: Handle<Mesh>,
+    pub mage_move_material: MaterialTy,
+    pub rotator_mesh: Handle<Mesh>,
+    pub rotator_available_material: MaterialTy,
+    pub rotator_available_highlighted_material: MaterialTy,
+    pub rotator_unavailable_material: MaterialTy,
 }

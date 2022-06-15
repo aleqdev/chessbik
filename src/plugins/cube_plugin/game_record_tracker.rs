@@ -2,9 +2,9 @@ use bevy::prelude::*;
 use chessbik_board::Board;
 use chessbik_commons::Cell;
 
-use crate::{events::UpdateCubeDisplayEvent, GameRecord};
+use crate::{events::UpdateCubeDisplayEvent, Cube, GameRecord};
 
-use super::{compute_board_difference, cube::Cube};
+use super::compute_board_difference;
 
 pub fn system(
     game_record: Option<Res<GameRecord>>,

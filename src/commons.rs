@@ -1,3 +1,6 @@
+use chessbik_board::{Board, PiecePosition};
+use chessbik_commons::Cell;
+
 pub fn get_piece_material(color: PieceColor, app_assets: &AppAssets) -> MaterialTy {
     match color {
         PieceColor::WHITE => app_assets.pieces.default_white.clone(),
@@ -21,9 +24,34 @@ pub struct PlaneMarker;
 #[derive(Component)]
 pub struct CubeMarker;
 
+#[derive(Component)]
+pub struct MageMoveIndicatorMarker(pub PiecePosition);
+
+#[derive(Component)]
+pub struct CubeDisplayerMarker;
+
+#[derive(Component)]
+pub struct CubeRotator(pub [CubeRotation; 3]);
+
+#[derive(Default)]
+pub struct AvailableMovesStorage(pub Vec<PieceMove>);
+
+#[derive(Default)]
 pub struct PlayerNameBuffer(pub String);
 
+#[derive(Default)]
 pub struct PlayerTokenBuffer(pub Option<PlayerToken>);
+
+#[derive(Default)]
+pub struct BoardReserve(pub Option<Board<Cell>>);
+
+#[derive(Default)]
+pub struct CubeRotationState {
+    pub is_rotating: bool,
+    pub mage: Option<PiecePosition>,
+    pub selected_rotator: Option<[CubeRotation; 3]>,
+    pub rotator_cycle: Option<usize>,
+}
 
 #[derive(Default)]
 pub struct SelectedPieceReference(pub Option<BoardReference>);
@@ -69,7 +97,7 @@ use bevy::{
     pbr::StandardMaterial,
     prelude::{Component, Handle},
 };
-use chessbik_board::PieceColor;
+use chessbik_board::{CubeRotation, PieceColor, PieceMove};
 use chessbik_commons::{PlayerToken, Side};
 
 use crate::{

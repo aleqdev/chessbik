@@ -1,14 +1,15 @@
 use bevy::prelude::*;
 use bevy_mod_picking::{Hover, Selection};
 use chessbik_board::{Board, BoardStatus, PieceColor, PieceMove, PiecePosition};
-use chessbik_commons::{Cell, PieceMovePair};
+use chessbik_commons::{Cell, IsOwning, PieceMovePair, PlayerColor, PlayerRecord};
 use itertools::Itertools;
 
 use crate::{
     app_assets::AppAssets,
-    commons::{self, CellMaterials, SelectedPieceReference},
+    commons::{
+        self, AvailableMovesStorage, CellMaterials, CubeRotationState, SelectedPieceReference,
+    },
     events::MakeMoveEvent,
-    plugins::available_moves_indication_plugin::AvailableMovesIndicator,
     BoardReference, GameRecord,
 };
 
@@ -41,9 +42,14 @@ pub fn system(
     record: Option<Res<GameRecord>>,
     app_assets: Res<AppAssets>,
     mut selected_ref: ResMut<SelectedPieceReference>,
-    indicator: Res<AvailableMovesIndicator>,
     mut make_move_events: EventWriter<MakeMoveEvent>,
+    moves: Res<AvailableMovesStorage>,
+    rotation_state: Res<CubeRotationState>,
 ) {
+    if rotation_state.is_rotating {
+        return;
+    }
+
     if let Some(record) = record {
         let board = record.board;
 
@@ -51,7 +57,6 @@ pub fn system(
             determine_selection(
                 &board,
                 &board_ref,
-                &indicator,
                 &record,
                 &mut selected_ref,
                 &selection,
@@ -64,6 +69,7 @@ pub fn system(
                 |mat| **mat = mats.default.clone(),
                 true,
                 &mut make_move_events,
+                &moves,
             );
         }
 
@@ -74,7 +80,6 @@ pub fn system(
             determine_selection(
                 &board,
                 &board_ref,
-                &indicator,
                 &record,
                 &mut selected_ref,
                 &selection,
@@ -95,6 +100,7 @@ pub fn system(
                 },
                 false,
                 &mut make_move_events,
+                &moves,
             );
         }
     }
@@ -103,7 +109,6 @@ pub fn system(
 fn determine_selection(
     board: &Board<Cell>,
     board_ref: &BoardReference,
-    indicator: &AvailableMovesIndicator,
     record: &GameRecord,
     selected_ref: &mut SelectedPieceReference,
     selection: &Selection,
@@ -114,11 +119,12 @@ fn determine_selection(
     make_default_fn: impl FnOnce(&mut Mut<Handle<StandardMaterial>>),
     is_plane: bool,
     make_move_events: &mut EventWriter<MakeMoveEvent>,
+    moves: &Res<AvailableMovesStorage>,
 ) {
     if can_cell_be_selected(
         board.at(*board_ref),
         **board_ref,
-        indicator.moves.as_ref(),
+        moves.0.as_ref(),
         record,
         selected_ref.0 != None,
         is_plane,
@@ -127,11 +133,11 @@ fn determine_selection(
             make_selected_fn(material);
 
             match selected_ref.0 {
-                Some(sel) => match indicator.moves.iter().find(|m| m.eq_position(**board_ref)) {
+                Some(sel) => match moves.0.iter().find(|m| m.eq_position(&**board_ref)) {
                     Some(p) => {
                         make_move_events.send(MakeMoveEvent(PieceMovePair { from: *sel, mv: *p }));
                     }
-                    None => {}
+                    None => selected_ref.0 = Some(*board_ref),
                 },
                 None => selected_ref.0 = Some(*board_ref),
             }
@@ -160,13 +166,36 @@ fn can_cell_be_selected(
     is_second_selection: bool,
     is_plane: bool,
 ) -> bool {
+    let is_owning_player = |color: PlayerColor| match color {
+        PlayerColor::WHITE => {
+            if let PlayerRecord::Opponent(_, IsOwning(true)) = record.players.white {
+                true
+            } else {
+                false
+            }
+        }
+        PlayerColor::BLACK => {
+            if let PlayerRecord::Opponent(_, IsOwning(true)) = record.players.black {
+                true
+            } else {
+                false
+            }
+        }
+    };
+
     match is_second_selection {
         false => match is_plane {
             true => false,
             false => match cell.piece {
                 Some(piece) => match piece.color {
-                    PieceColor::WHITE => record.board.status == BoardStatus::WhitesMove,
-                    PieceColor::BLACK => record.board.status == BoardStatus::BlacksMove,
+                    PieceColor::WHITE => {
+                        record.board.status == BoardStatus::WhitesMove
+                            && is_owning_player(PlayerColor::WHITE)
+                    }
+                    PieceColor::BLACK => {
+                        record.board.status == BoardStatus::BlacksMove
+                            && is_owning_player(PlayerColor::BLACK)
+                    }
                 },
                 None => false,
             },
@@ -178,7 +207,7 @@ fn can_cell_be_selected(
                 false => match piece.color {
                     PieceColor::BLACK => match record.board.status {
                         BoardStatus::WhitesMove => {
-                            available_moves.iter().any(|m| m.eq_position(pos))
+                            available_moves.iter().any(|m| m.eq_position(&pos))
                         }
                         BoardStatus::BlacksMove => true,
                         BoardStatus::Mate => false,
@@ -186,13 +215,13 @@ fn can_cell_be_selected(
                     PieceColor::WHITE => match record.board.status {
                         BoardStatus::WhitesMove => true,
                         BoardStatus::BlacksMove => {
-                            available_moves.iter().any(|m| m.eq_position(pos))
+                            available_moves.iter().any(|m| m.eq_position(&pos))
                         }
                         BoardStatus::Mate => false,
                     },
                 },
             },
-            None => available_moves.iter().any(|m| m.eq_position(pos)),
+            None => available_moves.iter().any(|m| m.eq_position(&pos)),
         },
     }
 }

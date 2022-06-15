@@ -6,6 +6,7 @@ pub mod app_state;
 pub mod board_reference;
 pub mod commons;
 pub mod consts;
+pub mod cube;
 pub mod cube_transform;
 pub mod events;
 pub mod game_record;
@@ -13,6 +14,7 @@ pub mod game_record;
 pub use app_state::*;
 pub use board_reference::*;
 pub use consts::*;
+pub use cube::*;
 pub use game_record::*;
 
 mod plugins;

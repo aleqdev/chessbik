@@ -3,11 +3,12 @@ use chessbik_board::{PiecePosition, PieceTy};
 use chessbik_commons::Cell;
 
 use crate::{
-    app_assets::AppAssets, commons::CellMaterials, cube_transform, events::UpdateCubeDisplayEvent,
-    BoardReference, GameRecord,
+    app_assets::AppAssets,
+    commons::{CellMaterials, CubeDisplayerMarker, CubeRotationState},
+    cube_transform,
+    events::UpdateCubeDisplayEvent,
+    BoardReference, Cube, Displayer, GameRecord,
 };
-
-use super::cube::{Cube, Displayer};
 
 pub fn system(
     mut commands: Commands,
@@ -15,6 +16,7 @@ pub fn system(
     cube: Option<ResMut<Cube>>,
     game_record: Option<Res<GameRecord>>,
     app_assets: Res<AppAssets>,
+    cube_rotation_state: Res<CubeRotationState>,
 ) {
     if let Some(game_record) = game_record {
         if let Some(mut cube) = cube {
@@ -27,6 +29,7 @@ pub fn system(
                         &app_assets,
                         &game_record.board.at(diff),
                         diff,
+                        cube_rotation_state.as_ref(),
                     );
                 }
             }
@@ -50,12 +53,19 @@ pub fn spawn_displayer(
     app_assets: &AppAssets,
     cell: &Cell,
     diff: usize,
+    cube_rotation_state: &CubeRotationState,
 ) -> Displayer {
     let reference = BoardReference::from(PiecePosition(diff));
 
     let transform = {
         let (pos, quat) = cube_transform::transform(diff);
-        Transform::from_translation(pos).with_rotation(quat)
+        let mut transform = Transform::from_translation(pos).with_rotation(quat);
+
+        if cube_rotation_state.is_rotating {
+            transform.translation += transform.up();
+        }
+
+        transform
     };
 
     let materials = CellMaterials::from_side(cell.side, app_assets);
@@ -69,6 +79,7 @@ pub fn spawn_displayer(
         })
         .insert(reference.clone())
         .insert(materials)
+        .insert(CubeDisplayerMarker)
         .insert_bundle(bevy_mod_picking::PickableBundle::default())
         .id();
 
@@ -84,6 +95,7 @@ pub fn spawn_displayer(
             })
             .insert(reference.clone())
             .insert(crate::commons::PieceMarker)
+            .insert(CubeDisplayerMarker)
             .insert_bundle(bevy_mod_picking::PickableBundle::default())
             .id()
     });

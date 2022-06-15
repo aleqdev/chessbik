@@ -5,7 +5,6 @@ use crate::{app_assets::AppAssets, cube_transform, BoardReference};
 
 #[derive(Default)]
 pub struct AvailableMovesIndicator {
-    pub moves: Vec<PieceMove>,
     pub indicators: Vec<Entity>,
 }
 
@@ -14,25 +13,19 @@ impl AvailableMovesIndicator {
         self.indicators.clear();
     }
 
-    pub fn update<Iter>(
+    pub fn update(
         &mut self,
-        moves: Iter,
         commands: &mut Commands,
-        app_assets: &Res<AppAssets>,
+        app_assets: &AppAssets,
         cube: Entity,
-    ) where
-        Iter: Iterator,
-        Iter::Item: Into<PieceMove>,
-        Vec<PieceMove>: FromIterator<Iter::Item>,
-    {
-        self.moves = moves.collect();
-
+        moves: &Vec<PieceMove>,
+    ) {
         for i in self.indicators.drain(..) {
             commands.entity(i).despawn();
         }
 
         commands.entity(cube).with_children(|parent| {
-            for m in self.moves.iter() {
+            for m in moves.iter() {
                 match m {
                     PieceMove::Slide(pos) | PieceMove::Take(pos) => {
                         let (vec3, quat) = cube_transform::transform(*pos);
@@ -51,6 +44,7 @@ impl AvailableMovesIndicator {
                                 .id(),
                         );
                     }
+                    PieceMove::Rotation(..) => {}
                 }
             }
         });

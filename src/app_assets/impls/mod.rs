@@ -107,6 +107,40 @@ impl AppAssets {
                 unlit: true,
                 ..default()
             }),
+            mage_move_mesh: meshes_assets.add(Mesh::from(shape::Plane {
+                size: crate::DEFAULT_MAGE_MESH_SIZE,
+                ..Default::default()
+            })),
+            mage_move_material: materials_assets.add(StandardMaterial {
+                base_color: crate::MAGE_MOVE_INDICATOR_COLOR,
+                alpha_mode: AlphaMode::Blend,
+                base_color_texture: Some(asset_server.load("move.png")),
+                unlit: true,
+                double_sided: true,
+                ..default()
+            }),
+            rotator_mesh: asset_server.load("rotator.stl"),
+            rotator_available_material: materials_assets.add(StandardMaterial {
+                base_color: crate::ROTATOR_AVAILABLE_COLOR,
+                alpha_mode: AlphaMode::Blend,
+                unlit: true,
+                double_sided: true,
+                ..default()
+            }),
+            rotator_available_highlighted_material: materials_assets.add(StandardMaterial {
+                base_color: crate::ROTATOR_AVAILABLE_HIGHLIGHTED_COLOR,
+                alpha_mode: AlphaMode::Blend,
+                unlit: true,
+                double_sided: true,
+                ..default()
+            }),
+            rotator_unavailable_material: materials_assets.add(StandardMaterial {
+                base_color: crate::ROTATOR_UNAVAILABLE_COLOR,
+                alpha_mode: AlphaMode::Blend,
+                unlit: true,
+                double_sided: true,
+                ..default()
+            }),
         }
     }
 }

@@ -5,6 +5,7 @@ mod available_moves_indication_plugin;
 mod camera_plugin;
 mod copy_lobby_plugin;
 mod cube_plugin;
+mod cube_rotation_plugin;
 mod custom_picking_plugin;
 mod disable_ctx_menu_plugin;
 mod join_game_from_clipboard_plugin;
@@ -59,5 +60,6 @@ impl PluginGroup for Plugins {
         group.add(selection_plugin::SelectionPlugin);
         group.add(available_moves_indication_plugin::AvailableMovesIndicationPlugin);
         group.add(make_move_plugin::MakeMovePlugin);
+        group.add(cube_rotation_plugin::CubeRotationPlugin);
     }
 }
