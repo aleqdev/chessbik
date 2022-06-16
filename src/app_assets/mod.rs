@@ -27,5 +27,6 @@ pub struct AppAssets {
     pub rotator_mesh: Handle<Mesh>,
     pub rotator_available_material: MaterialTy,
     pub rotator_available_highlighted_material: MaterialTy,
+    pub rotator_active_material: MaterialTy,
     pub rotator_unavailable_material: MaterialTy,
 }

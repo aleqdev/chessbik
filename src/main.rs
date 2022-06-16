@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_stl::StlPlugin;
 
 pub mod app_assets;
-pub mod app_state;
+pub mod app_labels;
 pub mod board_reference;
 pub mod commons;
 pub mod consts;
@@ -11,7 +11,7 @@ pub mod cube_transform;
 pub mod events;
 pub mod game_record;
 
-pub use app_state::*;
+pub use app_labels::*;
 pub use board_reference::*;
 pub use consts::*;
 pub use cube::*;

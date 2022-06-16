@@ -31,7 +31,7 @@ pub struct MageMoveIndicatorMarker(pub PiecePosition);
 pub struct CubeDisplayerMarker;
 
 #[derive(Component)]
-pub struct CubeRotator(pub [CubeRotation; 3]);
+pub struct CubeRotator(pub [CubeRotation; 3], pub bool);
 
 #[derive(Default)]
 pub struct AvailableMovesStorage(pub Vec<PieceMove>);

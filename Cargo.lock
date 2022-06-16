@@ -1182,7 +1182,7 @@ dependencies = [
 [[package]]
 name = "chessbik-board"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-board#afe30bf1ee0c7ad4956eba8ade9fa286e7bb840f"
+source = "git+https://github.com/necromfox/chessbik-board#81e82c15f2b493bb44dc639ef0f97264c71c39a6"
 dependencies = [
  "chessbik-derive-wrapper",
  "derive_more",
@@ -1195,7 +1195,7 @@ dependencies = [
 [[package]]
 name = "chessbik-commons"
 version = "0.1.0"
-source = "git+https://github.com/necromfox/chessbik-commons#50f1090670cd6d45e73fe9224185027969d8b7dc"
+source = "git+https://github.com/necromfox/chessbik-commons#d3cdce721085423e018eebed0a2d0f34d2210dd5"
 dependencies = [
  "chessbik-board",
  "chessbik-derive-wrapper",

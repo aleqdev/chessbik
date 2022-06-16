@@ -20,6 +20,7 @@ pub const MAGE_MOVE_INDICATOR_COLOR: Color = Color::rgb(1., 0.5, 1.);
 
 pub const ROTATOR_AVAILABLE_COLOR: Color = Color::rgb(1., 1., 0.6);
 pub const ROTATOR_AVAILABLE_HIGHLIGHTED_COLOR: Color = Color::rgb(1., 1., 1.);
+pub const ROTATOR_ACTIVE_COLOR: Color = Color::rgb(0.7, 1., 0.7);
 pub const ROTATOR_UNAVAILABLE_COLOR: Color = Color::rgb(0.2, 0.2, 0.2);
 
 pub const MOVE_INDICATOR_OFFSET: f32 = 0.01;

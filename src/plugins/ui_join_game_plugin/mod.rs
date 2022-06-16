@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::events::UiJoinGameEvent;
+use crate::{events::UiJoinGameEvent, AppLabels};
 
 #[cfg(target_arch = "wasm32")]
 mod implementation {
@@ -22,6 +22,6 @@ impl Plugin for JoinGamePlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<UiJoinGameEvent>();
         app.add_startup_system(implementation::startup_system);
-        app.add_system(implementation::system);
+        app.add_system(implementation::system.label(AppLabels::Ui));
     }
 }

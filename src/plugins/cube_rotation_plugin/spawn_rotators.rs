@@ -25,6 +25,7 @@ pub fn system(
         }
 
         if cube_rotation_state.is_rotating {
+            println!("spawning");
             *rotators_parent = Some(
                 commands
                     .spawn()
@@ -38,10 +39,16 @@ pub fn system(
                                 .iter()
                                 .any(|r| moves.0.iter().any(|m| m.eq_rotation(r)));
 
-                            let material = if av {
-                                app_assets.rotator_available_material.clone()
+                            let (material, active) = if av {
+                                if cube_rotation_state.selected_rotator.map_or(false, |drots| {
+                                    rots.iter().all(|x| drots.contains(x))
+                                }) {
+                                    (app_assets.rotator_active_material.clone(), true)
+                                } else {
+                                    (app_assets.rotator_available_material.clone(), false)
+                                }
                             } else {
-                                app_assets.rotator_unavailable_material.clone()
+                                (app_assets.rotator_unavailable_material.clone(), false)
                             };
 
                             let mut e = parent.spawn_bundle(PbrBundle {
@@ -54,10 +61,9 @@ pub fn system(
                                 },
                                 ..default()
                             });
-
-                            e.insert(CubeRotator(rots.clone()));
-
+                            
                             if av {
+                                e.insert(CubeRotator(rots.clone(), active));
                                 e.insert_bundle(bevy_mod_picking::PickableBundle::default());
                             }
                         }

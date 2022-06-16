@@ -12,13 +12,15 @@ mod implementation {
 
 use bevy::prelude::*;
 
+use crate::AppLabels;
+
 pub struct CopyLobbyPlugin;
 
 impl Plugin for CopyLobbyPlugin {
     fn build(&self, app: &mut App) {
         use crate::events::UiLobbyCopyEvent;
 
-        app.add_system(implementation::system);
+        app.add_system(implementation::system.label(AppLabels::AfterUi).after(AppLabels::Ui));
         app.add_event::<UiLobbyCopyEvent>();
     }
 }

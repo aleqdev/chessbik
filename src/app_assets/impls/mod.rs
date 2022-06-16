@@ -134,6 +134,13 @@ impl AppAssets {
                 double_sided: true,
                 ..default()
             }),
+            rotator_active_material: materials_assets.add(StandardMaterial {
+                base_color: crate::ROTATOR_ACTIVE_COLOR,
+                alpha_mode: AlphaMode::Blend,
+                unlit: true,
+                double_sided: true,
+                ..default()
+            }),
             rotator_unavailable_material: materials_assets.add(StandardMaterial {
                 base_color: crate::ROTATOR_UNAVAILABLE_COLOR,
                 alpha_mode: AlphaMode::Blend,
