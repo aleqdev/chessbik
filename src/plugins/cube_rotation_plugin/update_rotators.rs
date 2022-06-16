@@ -47,7 +47,7 @@ pub fn highlight_system(
     app_assets: Res<AppAssets>,
 ) {
     if rotation_state.is_changed() {
-        if let Some(rots) = rotation_state.selected_rotator {
+        if let Some(ref rots) = rotation_state.selected_rotator {
             for (mut rotator, mut mat) in query.iter_mut() {
                 if rotator.0.iter().all(|x| rots.contains(x)) {
                     rotator.1 = true;

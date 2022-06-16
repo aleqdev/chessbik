@@ -48,7 +48,7 @@ pub fn system(
                     ui.label(" rotate using buttons: ");
                 }
 
-                match rotation_state.selected_rotator {
+                match rotation_state.selected_rotator.clone() {
                     Some(rots) => {
                         let update_board = |x: usize| {
                             game_record.board = board_reserve;
@@ -57,13 +57,15 @@ pub fn system(
 
                         if ui.button("<").clicked() {
                             rotation_state.rotator_cycle = match rotation_state.rotator_cycle {
-                                Some(x) => Some((x as isize - 1).rem_euclid(3) as usize),
-                                None => Some(2),
+                                Some(x) => Some((x as isize - 1).rem_euclid(rots.len() as isize) as usize),
+                                None => Some(rots.len() - 1),
                             };
                             rotation_state.rotator_cycle.map(update_board);
+
+                            let _ = ui.button(">");
                         } else if ui.button(">").clicked() {
                             rotation_state.rotator_cycle = match rotation_state.rotator_cycle {
-                                Some(x) => Some((x + 1) % 3),
+                                Some(x) => Some((x + 1) % rots.len()),
                                 None => Some(0),
                             };
                             rotation_state.rotator_cycle.map(update_board);

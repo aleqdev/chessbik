@@ -25,7 +25,6 @@ pub fn system(
         }
 
         if cube_rotation_state.is_rotating {
-            println!("spawning");
             *rotators_parent = Some(
                 commands
                     .spawn()
@@ -35,12 +34,16 @@ pub fn system(
                     })
                     .with_children(|parent| {
                         for (vec3, quat, rots) in ROTATORS.iter() {
-                            let av = rots
-                                .iter()
-                                .any(|r| moves.0.iter().any(|m| m.eq_rotation(r)));
+                            let moves: Vec<_> = rots
+                                .clone()
+                                .into_iter()
+                                .filter(|r| moves.0.iter().any(|m| m.eq_rotation(r)))
+                                .collect();
+
+                            let av = moves.len() > 0;
 
                             let (material, active) = if av {
-                                if cube_rotation_state.selected_rotator.map_or(false, |drots| {
+                                if cube_rotation_state.selected_rotator.as_ref().map_or(false, |drots| {
                                     rots.iter().all(|x| drots.contains(x))
                                 }) {
                                     (app_assets.rotator_active_material.clone(), true)
@@ -63,7 +66,7 @@ pub fn system(
                             });
                             
                             if av {
-                                e.insert(CubeRotator(rots.clone(), active));
+                                e.insert(CubeRotator(moves, active));
                                 e.insert_bundle(bevy_mod_picking::PickableBundle::default());
                             }
                         }

@@ -31,7 +31,7 @@ pub struct MageMoveIndicatorMarker(pub PiecePosition);
 pub struct CubeDisplayerMarker;
 
 #[derive(Component)]
-pub struct CubeRotator(pub [CubeRotation; 3], pub bool);
+pub struct CubeRotator(pub Vec<CubeRotation>, pub bool);
 
 #[derive(Default)]
 pub struct AvailableMovesStorage(pub Vec<PieceMove>);
@@ -45,11 +45,11 @@ pub struct PlayerTokenBuffer(pub Option<PlayerToken>);
 #[derive(Default)]
 pub struct BoardReserve(pub Option<Board<Cell>>);
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct CubeRotationState {
     pub is_rotating: bool,
     pub mage: Option<PiecePosition>,
-    pub selected_rotator: Option<[CubeRotation; 3]>,
+    pub selected_rotator: Option<Vec<CubeRotation>>,
     pub rotator_cycle: Option<usize>,
 }
 
