@@ -57,7 +57,9 @@ pub fn system(
 
                         if ui.button("<").clicked() {
                             rotation_state.rotator_cycle = match rotation_state.rotator_cycle {
-                                Some(x) => Some((x as isize - 1).rem_euclid(rots.len() as isize) as usize),
+                                Some(x) => {
+                                    Some((x as isize - 1).rem_euclid(rots.len() as isize) as usize)
+                                }
                                 None => Some(rots.len() - 1),
                             };
                             rotation_state.rotator_cycle.map(update_board);

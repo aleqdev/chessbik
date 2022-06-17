@@ -1,6 +1,9 @@
 use bevy::prelude::*;
 
-use crate::{commons::{AvailableMovesStorage, SelectedPieceReference}, AppLabels};
+use crate::{
+    commons::{AvailableMovesStorage, SelectedPieceReference},
+    AppLabels,
+};
 
 mod indication;
 mod indicator;
@@ -14,6 +17,10 @@ impl Plugin for AvailableMovesIndicationPlugin {
         app.init_resource::<SelectedPieceReference>();
         app.init_resource::<AvailableMovesIndicator>();
         app.init_resource::<AvailableMovesStorage>();
-        app.add_system(indication::system.label(AppLabels::Indication).after(AppLabels::Selection));
+        app.add_system(
+            indication::system
+                .label(AppLabels::Indication)
+                .after(AppLabels::Selection),
+        );
     }
 }

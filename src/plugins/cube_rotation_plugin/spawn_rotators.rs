@@ -43,9 +43,11 @@ pub fn system(
                             let av = moves.len() > 0;
 
                             let (material, active) = if av {
-                                if cube_rotation_state.selected_rotator.as_ref().map_or(false, |drots| {
-                                    rots.iter().all(|x| drots.contains(x))
-                                }) {
+                                if cube_rotation_state
+                                    .selected_rotator
+                                    .as_ref()
+                                    .map_or(false, |drots| rots.iter().all(|x| drots.contains(x)))
+                                {
                                     (app_assets.rotator_active_material.clone(), true)
                                 } else {
                                     (app_assets.rotator_available_material.clone(), false)
@@ -64,7 +66,7 @@ pub fn system(
                                 },
                                 ..default()
                             });
-                            
+
                             if av {
                                 e.insert(CubeRotator(moves, active));
                                 e.insert_bundle(bevy_mod_picking::PickableBundle::default());

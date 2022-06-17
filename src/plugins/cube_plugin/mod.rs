@@ -10,8 +10,16 @@ pub struct CubePlugin;
 
 impl Plugin for CubePlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(game_record_tracker::system.label(AppLabels::CubeDisplay).after(AppLabels::Indication));
-        app.add_system(cube_display::system.label(AppLabels::CubeDisplay).after(AppLabels::Indication));
+        app.add_system(
+            game_record_tracker::system
+                .label(AppLabels::CubeDisplay)
+                .after(AppLabels::Indication),
+        );
+        app.add_system(
+            cube_display::system
+                .label(AppLabels::CubeDisplay)
+                .after(AppLabels::Indication),
+        );
         app.add_event::<UpdateCubeDisplayEvent>();
     }
 }

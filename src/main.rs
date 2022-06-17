@@ -20,16 +20,24 @@ pub use game_record::*;
 mod plugins;
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
+    let mut app = App::new();
+
+    app.add_plugins(DefaultPlugins)
         .add_plugins(plugins::Plugins)
         .add_plugin(StlPlugin)
-        .insert_resource(WindowDescriptor {
-            width: 800.,
-            height: 1024.,
+        .insert_resource(ClearColor(Color::BLACK));
+
+    #[cfg(target_arch = "wasm32")]
+    {
+        let window = web_sys::window().unwrap();
+
+        app.insert_resource(WindowDescriptor {
+            width: window.inner_width().unwrap().as_f64().unwrap() as f32 - 12.,
+            height: window.inner_height().unwrap().as_f64().unwrap() as f32 - 12.,
             title: "Chessbik".into(),
             ..Default::default()
-        })
-        .insert_resource(ClearColor(Color::BLACK))
-        .run();
+        });
+    }
+
+    app.run();
 }

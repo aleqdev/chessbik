@@ -4,7 +4,7 @@ use chessbik_commons::{IsOwning, PlayerColor, PlayerRecord};
 use egui_extras::{Size, StripBuilder};
 
 use crate::{
-    commons::{PlayerNameBuffer, CubeRotationState},
+    commons::{CubeRotationState, PlayerNameBuffer},
     events::{
         UiChangeNameEvent, UiJoinGameEvent, UiLeaveGameEvent, UiLobbyCopyEvent, UiNewGameEvent,
         UiRequestEngineEvent, UiRequestOpponentEvent,
@@ -24,7 +24,7 @@ pub fn system(
     mut name: ResMut<PlayerNameBuffer>,
     mut lobby_copied: Local<bool>,
     game_record: Option<Res<GameRecord>>,
-    mut rotation_state: ResMut<CubeRotationState>
+    mut rotation_state: ResMut<CubeRotationState>,
 ) {
     let make_new_game_button = |ui: &mut egui::Ui| {
         if ui.button(" new game ").clicked() {

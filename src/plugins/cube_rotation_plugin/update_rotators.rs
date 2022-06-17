@@ -37,12 +37,7 @@ pub fn system(
 }
 
 pub fn highlight_system(
-    mut query: Query<
-        (
-            &mut CubeRotator,
-            &mut Handle<StandardMaterial>,
-        )
-    >,
+    mut query: Query<(&mut CubeRotator, &mut Handle<StandardMaterial>)>,
     rotation_state: ResMut<CubeRotationState>,
     app_assets: Res<AppAssets>,
 ) {

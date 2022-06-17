@@ -8,5 +8,5 @@ pub enum AppLabels {
     Selection,
     Indication,
     CubeDisplay,
-    CubeRotation
+    CubeRotation,
 }
