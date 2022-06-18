@@ -7,7 +7,7 @@ use crate::{
     commons::{CubeRotationState, PlayerNameBuffer},
     events::{
         UiChangeNameEvent, UiJoinGameEvent, UiLeaveGameEvent, UiLobbyCopyEvent, UiNewGameEvent,
-        UiRequestEngineEvent, UiRequestOpponentEvent,
+        UiRequestEngineEvent, UiRequestOpponentEvent, UiRemovePlayerEvent,
     },
     GameRecord,
 };
@@ -20,6 +20,7 @@ pub fn system(
     mut join_game_writer: EventWriter<UiJoinGameEvent>,
     mut request_engine_writer: EventWriter<UiRequestEngineEvent>,
     mut request_opponent_writer: EventWriter<UiRequestOpponentEvent>,
+    mut remove_player_writer: EventWriter<UiRemovePlayerEvent>,
     mut change_name_writer: EventWriter<UiChangeNameEvent>,
     mut name: ResMut<PlayerNameBuffer>,
     mut lobby_copied: Local<bool>,
@@ -98,7 +99,8 @@ pub fn system(
         |ui: &mut egui::Ui,
          game_record: &Res<GameRecord>,
          request_opponent_writer: &mut EventWriter<UiRequestOpponentEvent>,
-         request_engine_writer: &mut EventWriter<UiRequestEngineEvent>| {
+         request_engine_writer: &mut EventWriter<UiRequestEngineEvent>,
+         remove_player_writer: &mut EventWriter<UiRemovePlayerEvent>| {
             ui.with_layout(egui::Layout::right_to_left(), |ui| {
                 match game_record.players.white {
                     PlayerRecord::None => {
@@ -110,14 +112,22 @@ pub fn system(
                             request_engine_writer.send(UiRequestEngineEvent(PlayerColor::WHITE));
                         }
                     }
-                    PlayerRecord::Engine(..) => {
+                    PlayerRecord::Engine(IsOwning(is_owning)) => {
                         ui.label(egui::RichText::new("engine").color(egui::Color32::GOLD));
+                        if is_owning {
+                            if ui.button("remove").clicked() {
+                                remove_player_writer.send(UiRemovePlayerEvent(PlayerColor::WHITE));
+                            }
+                        }
                     }
                     PlayerRecord::Opponent(ref name, IsOwning(false)) => {
                         ui.label(egui::RichText::new(name.0.clone()));
                     }
                     PlayerRecord::Opponent(_, IsOwning(true)) => {
                         ui.label(egui::RichText::new("you").color(egui::Color32::LIGHT_GREEN));
+                        if ui.button("quit").clicked() {
+                            remove_player_writer.send(UiRemovePlayerEvent(PlayerColor::WHITE));
+                        }
                     }
                 };
             });
@@ -133,7 +143,8 @@ pub fn system(
         |ui: &mut egui::Ui,
          game_record: &Res<GameRecord>,
          request_opponent_writer: &mut EventWriter<UiRequestOpponentEvent>,
-         request_engine_writer: &mut EventWriter<UiRequestEngineEvent>| {
+         request_engine_writer: &mut EventWriter<UiRequestEngineEvent>,
+         remove_player_writer: &mut EventWriter<UiRemovePlayerEvent>| {
             ui.horizontal_centered(|ui| {
                 match game_record.players.black {
                     PlayerRecord::None => {
@@ -145,14 +156,22 @@ pub fn system(
                             request_engine_writer.send(UiRequestEngineEvent(PlayerColor::BLACK));
                         }
                     }
-                    PlayerRecord::Engine(..) => {
+                    PlayerRecord::Engine(IsOwning(is_owning)) => {
                         ui.label(egui::RichText::new("engine").color(egui::Color32::GOLD));
+                        if is_owning {
+                            if ui.button("remove").clicked() {
+                                remove_player_writer.send(UiRemovePlayerEvent(PlayerColor::BLACK));
+                            }
+                        }
                     }
                     PlayerRecord::Opponent(ref name, IsOwning(false)) => {
                         ui.label(egui::RichText::new(name.0.clone()));
                     }
                     PlayerRecord::Opponent(_, IsOwning(true)) => {
                         ui.label(egui::RichText::new("you").color(egui::Color32::LIGHT_GREEN));
+                        if ui.button("quit").clicked() {
+                            remove_player_writer.send(UiRemovePlayerEvent(PlayerColor::BLACK));
+                        }
                     }
                 };
             });
@@ -172,6 +191,7 @@ pub fn system(
                             game_record,
                             &mut request_opponent_writer,
                             &mut request_engine_writer,
+                            &mut remove_player_writer
                         )
                     });
                     strip.cell(make_ingame_menu_second_column_second_strip);
@@ -181,6 +201,7 @@ pub fn system(
                             game_record,
                             &mut request_opponent_writer,
                             &mut request_engine_writer,
+                            &mut remove_player_writer
                         )
                     });
                 });

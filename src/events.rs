@@ -24,6 +24,8 @@ pub struct UiRequestEngineEvent(pub PlayerColor);
 
 pub struct UiRequestOpponentEvent(pub PlayerColor);
 
+pub struct UiRemovePlayerEvent(pub PlayerColor);
+
 pub struct MakeMoveEvent(pub PieceMovePair);
 
 chessbik_derive_wrapper::derive_wrapper!(

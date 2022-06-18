@@ -28,6 +28,7 @@ mod ws_consider_subscription_plugin;
 mod ws_request_board_callback_plugin;
 mod ws_request_player_token_callback_plugin;
 mod ws_request_players_callback_plugin;
+mod ui_remove_player_plugin;
 
 pub struct Plugins;
 
@@ -61,5 +62,6 @@ impl PluginGroup for Plugins {
         group.add(available_moves_indication_plugin::AvailableMovesIndicationPlugin);
         group.add(make_move_plugin::MakeMovePlugin);
         group.add(cube_rotation_plugin::CubeRotationPlugin);
+        group.add(ui_remove_player_plugin::RemovePlayerPlugin);
     }
 }
