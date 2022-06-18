@@ -26,8 +26,7 @@ pub const ROTATOR_UNAVAILABLE_COLOR: Color = Color::rgb(0.2, 0.2, 0.2);
 pub const MOVE_INDICATOR_OFFSET: f32 = 0.01;
 pub const MOVE_INDICATOR_COLOR: Color = Color::rgb(1., 0., 1.);
 
-pub const WS_URL: &'static str = "wss://chessbik.herokuapp.com/ws";
-//pub const WS_URL: &'static str = "ws://localhost:3000/ws";
+pub const WS_URL: &'static str = env!("WS_URL");
 
 pub const DEFAULT_CUBE_SCALE: Vec3 = const_vec3!([0.3, 0.3, 0.3]);
 
