@@ -1,7 +1,7 @@
 # chessbik
 
 # try live
-- (be aware: on web canvas may appear larger than your window, make sure to scroll out)
+be aware: on web canvas may appear larger than your window, make sure to scroll out
 - [heroku](https://chessbik.herokuapp.com)
 - [dest0re](https://not.dest0re.ru/necromfox/)
 
